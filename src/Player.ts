@@ -1,4 +1,5 @@
 import { TILE_TYPE } from "./Tile";
+import { MOVEMENT_TYPE } from "./Entity";
 import { HealthPack } from "./HealthPack";
 import { Application } from "pixi.js";
 import {
@@ -6,7 +7,7 @@ import {
   currentDelta,
   viewHeight,
   viewWidth,
-  currentMap
+  currentMap,
 } from "./index";
 import { checkSpriteCollision } from "./index";
 import { Entity, STATE } from "./Entity";
@@ -29,6 +30,7 @@ export class Player extends Entity {
     displayHealthBar?: boolean
   ) {
     super(spriteName, app, speed, displayHealthBar);
+    this.movementType = MOVEMENT_TYPE.PLAYER;
     console.log("Player has been initialized", this);
   }
 
@@ -81,7 +83,7 @@ export class Player extends Entity {
       if (this.checkMapCollision()) this.position.y = prevPos.y;
 
       // check for collision
-      entities.forEach(function(entity: Entity) {
+      entities.forEach(function (entity: Entity) {
         // also are we colliding with it?
         if (checkSpriteCollision(tthis, entity)) {
           switch (entity.constructor) {
@@ -152,7 +154,7 @@ export class Player extends Entity {
                 centerY: this.position.y + sprite1.height / 2,
                 //Find the half-widths and half-heights of each sprite
                 halfWidth: sprite1.width / 2,
-                halfHeight: sprite1.height / 2
+                halfHeight: sprite1.height / 2,
               };
 
               let r2 = {
@@ -161,7 +163,7 @@ export class Player extends Entity {
                 centerY: currentTile.position.y + sprite2.height / 2,
                 //Find the half-widths and half-heights of each sprite
                 halfWidth: sprite2.width / 2,
-                halfHeight: sprite2.height / 2
+                halfHeight: sprite2.height / 2,
               };
 
               //hit will determine whether there's a collision

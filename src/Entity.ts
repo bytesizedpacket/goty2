@@ -10,13 +10,14 @@ import { TILE_TYPE } from "./Tile";
 export enum STATE {
   ACTIVE,
   INACTIVE, // won't move or do anything
-  DEAD // will remove itself from the game/memory
+  DEAD, // will remove itself from the game/memory
 }
 
 export enum MOVEMENT_TYPE {
   // we map these to the enemy sprite names so the levels.json is easier to use
   DEFAULT = "enemy-default", // regular movement
-  FLY = "enemy-fly" // "orbit" movement
+  FLY = "enemy-fly", // "orbit" movement
+  PLAYER = "player",
 }
 
 // we use this independently from the screen/sprite coordingates
@@ -120,7 +121,7 @@ export class Entity {
     // this is jank
     // also, this is jank
     let tthis = this;
-    this.spriteObject.on("mousedown", function(e: any) {
+    this.spriteObject.on("mousedown", function (e: any) {
       tthis.onClick(e);
     });
 
@@ -166,7 +167,7 @@ export class Entity {
     // update our tile position
     this.tilePosition = {
       x: Math.round(this.position.x / 16),
-      y: Math.round(this.position.y / 16)
+      y: Math.round(this.position.y / 16),
     };
 
     // uh oh spaghettios it's dead
@@ -246,7 +247,7 @@ export class Entity {
                 centerY: this.position.y + sprite1.height / 2,
                 //Find the half-widths and half-heights of each sprite
                 halfWidth: sprite1.width / 2,
-                halfHeight: sprite1.height / 2
+                halfHeight: sprite1.height / 2,
               };
 
               let r2 = {
@@ -255,7 +256,7 @@ export class Entity {
                 centerY: currentTile.position.y + sprite2.height / 2,
                 //Find the half-widths and half-heights of each sprite
                 halfWidth: sprite2.width / 2,
-                halfHeight: sprite2.height / 2
+                halfHeight: sprite2.height / 2,
               };
 
               //hit will determine whether there's a collision
