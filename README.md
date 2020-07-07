@@ -4,7 +4,7 @@ A project based on the [Gjorg's Arena](https://github.com/bytesizedpacket/arena)
 
 The name "GOTY2" is a reference to an old multiplayer chatroom named "GOTY" that was developed by BSP as a tech demo.
 
-Made with PIXI.JS, Typescript, and Webpack.
+Made with PIXI.JS, Socket.IO, Typescript, and Webpack.
 
 - Make sure you have [node.js](https://nodejs.org/en/download/) and `npm` installed to compile this project.
 - Clone this repository with `git clone https://github.com/bytesizedpacket/goty2.git`
