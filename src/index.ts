@@ -72,7 +72,7 @@ let initLevel = function (delta?: any) {
       if (!(entity instanceof Player)) entity.destroy();
     });
   }
-  levelDiv.innerHTML = "<b>LEVEL " + currentLevel + "</b>";
+  levelDiv.innerHTML = "<br/><b>GOTY2</b>";
 
   // we add this back later so the map renders under us
   app.stage.removeChild(player.spriteObject);
@@ -149,9 +149,7 @@ app.loader.add(assets).load(function () {
   // make stage interactable
   app.stage.interactive = true;
 
-  // tell the user to click the enemies!
-  // TODO: make this a popup notification of some kind
-  statusDiv.innerHTML = "Click the enemies!";
+  statusDiv.innerHTML = ""; // TODO: make this say something
 
   // set up player object
   player = new Player("player", app);
