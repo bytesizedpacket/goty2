@@ -81,6 +81,12 @@ let initLevel = function (delta?: any) {
   // construct our map object
   currentMap = new Map(currentLevel);
 
+  // set player's start position
+  player.position = {
+    x: currentMap.startPosition.x * 16,
+    y: currentMap.startPosition.y * 16,
+  };
+
   app.stage.addChild(player.spriteObject);
   app.stage.addChild(player.healthBar);
 
@@ -129,10 +135,10 @@ let gameLoop = function (delta: any) {
   currentMap.updateSprites();
 
   // if there are no enemies left, set up a new level
-  // TODO: different win condition?
+  // disabled for GOTY2
   if (!enemyCheck) {
-    currentLevel = currentLevel + 1;
-    gameState = initLevel;
+    //currentLevel = currentLevel + 1;
+    //gameState = initLevel;
   }
 };
 

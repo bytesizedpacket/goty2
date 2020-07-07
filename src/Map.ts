@@ -30,10 +30,7 @@ export class Map {
       let tiles = currentLevel.tiles;
       this.sizeX = tiles.length;
       this.sizeY = tiles[0].length;
-
-      let startPos = currentLevel.startPos;
-
-      player.position = { x: startPos.x * 16, y: startPos.y * 16 };
+      this.startPosition = currentLevel.startPos;
 
       this.tileContainer = new Container();
       this.tiles = []; // initialize the first dimension of the array
@@ -47,7 +44,7 @@ export class Map {
 
           currentTile = new Tile(tiles[stepX][stepY].type, {
             x: stepX * 16,
-            y: stepY * 16
+            y: stepY * 16,
           });
 
           currentTile.spriteObject.position.set(
@@ -63,7 +60,9 @@ export class Map {
       app.stage.addChild(this.tileContainer);
 
       // construct enemies
-      currentLevel.enemies.forEach(function(enemy: any) {
+      // disabled for GOTY2
+      /*
+      currentLevel.enemies.forEach(function (enemy: any) {
         let currentEnemy = new Enemy(
           enemy.type,
           app,
@@ -74,9 +73,10 @@ export class Map {
 
         currentEnemy.position = {
           x: enemy.position.x * 16,
-          y: enemy.position.y * 16
+          y: enemy.position.y * 16,
         };
       });
+      */
     } else {
       statusDiv.innerHTML = "<b>Unfortunately, that was the last level.</b>";
     }
