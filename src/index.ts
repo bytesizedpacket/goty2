@@ -1,6 +1,6 @@
 import { Map } from "./Map";
 import * as PIXI from "pixi.js";
-let socket = require("socket.io-client")(); // TODO: set server port/ip
+let socket = require("socket.io-client")("http://floof.zone:3000"); // TODO: set server port/ip
 // make vscode ignore these since they don't have typings
 // @ts-ignore
 import * as Keyboard from "pixi.js-keyboard";
