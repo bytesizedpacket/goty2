@@ -9,9 +9,10 @@ import {
   viewWidth,
   currentMap,
 } from "./index";
-import { checkSpriteCollision } from "./index";
+import { checkSpriteCollision, io } from "./index";
 import { Entity, STATE } from "./Entity";
 import { Enemy } from "./Enemy";
+import { RemotePlayer } from "./RemotePlayer";
 // @ts-ignore
 import * as Keyboard from "pixi.js-keyboard";
 // @ts-ignore
@@ -119,13 +120,22 @@ export class Player extends Entity {
   }
 
   // when entities are clicked, they trigger this function on the player
-  public interact(target: Entity) {
+  public interact(target: any) {
     // TODO: different weapons
     if (this.state == STATE.ACTIVE) {
       // make sure we aren't clicking ourselves
       if (!(target instanceof Player)) {
         // make sure player is active
         if (this.distanceTo(target) < 80) target.damage(25);
+      }
+      
+      switch(target.constructor){
+        case RemotePlayer:
+          io.emit("playerDamage", target.playerId, 25); // TODO: make this & regular damage pull from same variable
+          break;
+        default:
+          // any entity
+          break;
       }
     }
   }

@@ -1,7 +1,7 @@
 import { Sprite } from "pixi.js";
 import { Application } from "pixi.js";
 import { Entity, STATE, MOVEMENT_TYPE } from "./Entity";
-import { player } from "./index";
+import { player, debugLog } from "./index";
 import {
   entities,
   checkSpriteCollision,
@@ -26,6 +26,7 @@ export class RemotePlayer extends Entity {
     super(spriteName, app, speed, displayHealthBar, movementType);
     this.playerId = playerId;
     this.playerData = playerData;
+    debugLog("Player "+playerId+" created!");
   }
  
   // run every frame
@@ -38,6 +39,12 @@ export class RemotePlayer extends Entity {
    
    // kill if we're dead
    //if (this.state == STATE.DEAD) this.destroy();
+ }
+ 
+ // attack player!
+ public damage(amount: number){
+   super.damage(amount);
+   
  }
   
 }

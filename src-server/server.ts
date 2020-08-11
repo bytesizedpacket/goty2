@@ -19,6 +19,13 @@ io.on('connection', (socket) => {
     //console.log(player);
     socket.broadcast.emit('playerUpdate', {id: socket.id, data: player});
   });
+  
+  socket.on('playerDamage', (id, amount) => {
+    console.log("Player " + id + " damaged for " + amount);
+    
+    // tell the client they were damaged
+    io.to(id).emit('playerDamage', amount);
+  })
     
   socket.on('disconnect', (player) => {
     players.delete(socket.id); // remove from players

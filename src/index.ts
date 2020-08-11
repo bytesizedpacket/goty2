@@ -1,6 +1,6 @@
 import { Map } from "./Map";
 import * as PIXI from "pixi.js";
-let io = require("socket.io-client")("http://floof.zone:3000");
+export let io = require("socket.io-client")("http://floof.zone:3000");
 // make vscode ignore these since they don't have typings
 // @ts-ignore
 import * as Keyboard from "pixi.js-keyboard";
@@ -70,42 +70,6 @@ io.on('disconnect', () => {
   debugLog("Disconnected");
 });
 
-// the server has sent us new info about a player
-// shit contains 'id' and 'remotePlayer' object
-io.on('playerUpdate', function(shit: any) {
-  let id = shit.id;
-  let data = shit.data;
-  let playerExists = false;
-  entities.forEach(function (entity: Entity) {
-    // is this a player?
-    if(entity instanceof RemotePlayer){
-      // does its id match?
-      if(entity.playerId == id){
-        playerExists = true;
-        entity.playerData = data;
-      }
-    }
-  });
-  
-  if(!playerExists){
-    // create new RemotePlayer
-    let newRemotePlayer = new RemotePlayer("player", app, id, data)
-  }
-});
-
-// the server told us a player disconnected
-io.on('playerDisconnect', (id: string) => {
-  entities.forEach(function (entity: Entity) {
-    // is this a player?
-    if(entity instanceof RemotePlayer){
-      // does its id match?
-      if(entity.playerId == id){
-        entity.destroy(); // remove the player from the game
-      }
-    }
-  });
-});
-
 // disable rightclicking
 app.view.addEventListener("contextmenu", (e) => {
   if (e.type == "contextmenu") e.preventDefault();
@@ -164,6 +128,47 @@ let initLevel = function (delta?: any) {
     };
     healthPack.position = pos;
   }
+  
+  // the server has sent us new info about a player
+  // shit contains 'id' and 'remotePlayer' object
+  io.on('playerUpdate', function(shit: any) {
+    let id = shit.id;
+    let data = shit.data;
+    let playerExists = false;
+    entities.forEach(function (entity: Entity) {
+      // is this a player?
+      if(entity instanceof RemotePlayer){
+        // does its id match?
+        if(entity.playerId == id){
+          playerExists = true;
+          entity.playerData = data;
+        }
+      }
+    });
+    
+    if(!playerExists){
+      // create new RemotePlayer
+      let newRemotePlayer = new RemotePlayer("player", app, id, data)
+    }
+  });
+  
+  // we have been damaged!
+  io.on('playerDamage', (amount: number) => {
+    player.damage(amount);
+  });
+  
+  // the server told us a player disconnected
+  io.on('playerDisconnect', (id: string) => {
+    entities.forEach(function (entity: Entity) {
+      // is this a player?
+      if(entity instanceof RemotePlayer){
+        // does its id match?
+        if(entity.playerId == id){
+          entity.destroy(); // remove the player from the gamea
+        }
+      }
+    });
+  });
 
   // set the gameState to gameLoop;
   gameState = gameLoop;
