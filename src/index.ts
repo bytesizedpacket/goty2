@@ -1,6 +1,6 @@
 import { Map } from "./Map";
 import * as PIXI from "pixi.js";
-let socket = require("socket.io-client")("http://floof.zone:3000"); // TODO: set server port/ip
+let io = require("socket.io-client")("http://floof.zone:3000");
 // make vscode ignore these since they don't have typings
 // @ts-ignore
 import * as Keyboard from "pixi.js-keyboard";
@@ -9,6 +9,7 @@ import * as Mouse from "pixi.js-mouse";
 import { Entity } from "./Entity";
 import { STATE, MOVEMENT_TYPE } from "./Entity";
 import { Player } from "./Player";
+import { RemotePlayer } from "./RemotePlayer";
 import { Enemy } from "./Enemy";
 import { HealthPack } from "./HealthPack";
 import { DamageNumber } from "./DamageNumber";
@@ -18,6 +19,12 @@ import { DamageNumber } from "./DamageNumber";
 const urlParams = new URLSearchParams(window.location.search);
 export let statusDiv = document.getElementById("status");
 export let levelDiv = document.getElementById("level");
+export let ghettoConsole = document.getElementById("ghettoconsole"); // for coding on my ipad where i don't get the regular console (thanks apple)
+
+export let debugLog = function(text: string){
+  console.log(text);
+  //ghettoConsole.innerHTML += "<br/>" + text;
+}
 
 // game properties
 export let viewWidth: number = 256;
@@ -31,6 +38,9 @@ export let player: Player;
 export let currentDelta = 0;
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 export let currentMap: Map;
+export let connected: boolean = false;
+export let updateTimer: number = 0;
+let updateInterval = 1; // amount of frames to hold data for
 
 // these are our assets
 let assets = [
@@ -48,6 +58,53 @@ export let damageNumbers: DamageNumber[] = [];
 // setup pixi
 export let app = new PIXI.Application({ width: viewWidth, height: viewHeight });
 document.body.appendChild(app.view);
+
+// connect socketio
+io.on('connect', function(socket: any) {
+  connected = true;
+  debugLog("Connected to server!");
+});
+
+io.on('disconnect', () => {
+  connected = false;
+  debugLog("Disconnected");
+});
+
+// the server has sent us new info about a player
+// shit contains 'id' and 'remotePlayer' object
+io.on('playerUpdate', function(shit: any) {
+  let id = shit.id;
+  let data = shit.data;
+  let playerExists = false;
+  entities.forEach(function (entity: Entity) {
+    // is this a player?
+    if(entity instanceof RemotePlayer){
+      // does its id match?
+      if(entity.playerId == id){
+        playerExists = true;
+        entity.playerData = data;
+      }
+    }
+  });
+  
+  if(!playerExists){
+    // create new RemotePlayer
+    let newRemotePlayer = new RemotePlayer("player", app, id, data)
+  }
+});
+
+// the server told us a player disconnected
+io.on('playerDisconnect', (id: string) => {
+  entities.forEach(function (entity: Entity) {
+    // is this a player?
+    if(entity instanceof RemotePlayer){
+      // does its id match?
+      if(entity.playerId == id){
+        entity.destroy(); // remove the player from the game
+      }
+    }
+  });
+});
 
 // disable rightclicking
 app.view.addEventListener("contextmenu", (e) => {
@@ -120,7 +177,21 @@ let gameLoop = function (delta: any) {
   damageNumbers.forEach(function (damageNumber: DamageNumber) {
     damageNumber.tick();
   });
-
+  
+  // update player position
+  //if(connected){
+  if(updateTimer <= 0){
+    io.emit('playerUpdate', {
+      position: player.position,
+      health: player.health,
+      state: player.state
+    });
+    updateTimer = updateInterval;
+    }else{
+      updateTimer--;
+    }
+  //}
+    
   // make sure every entity handles their ticks and stays inside the map
   entities.forEach(function (entity: Entity) {
     // don't tick it if it's inactive
@@ -150,7 +221,7 @@ app.loader.add(assets).load(function () {
   // make stage interactable
   app.stage.interactive = true;
 
-  statusDiv.innerHTML = ""; // TODO: make this say something
+  //statusDiv.innerHTML = ""; // TODO: make this say something
 
   // set up player object
   player = new Player("player", app);
