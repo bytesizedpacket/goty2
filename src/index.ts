@@ -17,6 +17,8 @@ import { DamageNumber } from "./DamageNumber";
 
 // aliases and helpful variables
 const urlParams = new URLSearchParams(window.location.search);
+export let playerName: string = urlParams.get("name"); // use ?name= to name the player
+console.log("Player name: " + playerName);
 export let statusDiv = document.getElementById("status");
 export let levelDiv = document.getElementById("level");
 export let ghettoConsole = document.getElementById("ghettoconsole"); // for coding on my ipad where i don't get the regular console (thanks apple)
@@ -148,7 +150,7 @@ let initLevel = function (delta?: any) {
 
     if (!playerExists) {
       // create new RemotePlayer
-      new RemotePlayer("enemy-default", app, id, data, undefined, undefined, undefined, undefined, id);
+      new RemotePlayer("enemy-default", app, id, data);
     }
   });
 
@@ -189,7 +191,8 @@ let gameLoop = function (delta: any) {
     io.emit('playerUpdate', {
       position: player.position,
       health: player.health,
-      state: player.state
+      state: player.state,
+      name: playerName
     });
     updateTimer = updateInterval;
   } else {

@@ -13,22 +13,26 @@ import {
 // main remote player object
 export class RemotePlayer extends Entity {
   public playerId: string;
-  public playerData: { position: { x: number, y: number }, health: number, state: STATE };
+  public playerData: { position: { x: number, y: number }, health: number, state: STATE, name: string };
   constructor(
     spriteName: string,
     app: Application,
     playerId: string,
-    playerData: { position: { x: number, y: number }, health: number, state: STATE },
+    playerData: { position: { x: number, y: number }, health: number, state: STATE, name: string },
     speed?: number,
     displayHealthBar?: boolean,
     movementType?: MOVEMENT_TYPE,
     position?: Position,
     labelText?: string
   ) {
-    super(spriteName, app, speed, displayHealthBar, movementType, position, labelText);
+    if (playerData.name) {
+      super(spriteName, app, speed, displayHealthBar, movementType, position, playerData.name);
+    } else {
+      super(spriteName, app, speed, displayHealthBar, movementType, position, playerId);
+    }
     this.playerId = playerId;
     this.playerData = playerData;
-    debugLog("Player " + playerId + " created!");
+    debugLog("Player " + playerId + " / " + playerData.name + " created!");
   }
 
   // run every frame
