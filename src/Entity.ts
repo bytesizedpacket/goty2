@@ -109,7 +109,7 @@ export class Entity {
 
       app.stage.addChild(this.healthBar);
     }
-    
+
     if (labelText) {
       this.labelText = labelText;
       this.label = new Text(labelText, { font: "30px Roboto Condensed", fill: "white", dropShadow: true, dropShadowBlur: 2 });
@@ -193,18 +193,28 @@ export class Entity {
     if (this.health <= 0) {
       this.health = 0; // prevents the healthbar from descending into deader-than-dead
       this.state = STATE.DEAD;
-      if(this.label){
+      if (this.label) {
         statusText.text = this.label.text + " died";
       }
     }
-    
-    if(this.labelText){
-      if(this.state == STATE.AFK){
+
+    if (this.labelText) {
+      // display AFK indicator and hide health bar
+      if (this.state == STATE.AFK) {
         this.label.text = this.labelText + " (AFK)";
-        this.healthBar.visible = false;
-      }else{
+        this.outlineHealthBar.visible = false;
+        this.frontHealthBar.visible = false;
+        this.rearHealthBar.visible = false;
+      } else if (this.state == STATE.DEAD) {
+        this.label.text = this.labelText + " (DEAD)";
+        this.outlineHealthBar.visible = true;
+        this.frontHealthBar.visible = true;
+        this.rearHealthBar.visible = true;
+      } else {
         this.label.text = this.labelText;
-        this.healthBar.visible = true;
+        this.outlineHealthBar.visible = true;
+        this.frontHealthBar.visible = true;
+        this.rearHealthBar.visible = true;
       }
     }
 
@@ -233,23 +243,23 @@ export class Entity {
     // call the player's interact() on this
     player.interact(this);
   }
-  
+
   // add an item to this entity's inventory
   public addItemToInventory(item: Item) {
     this.inventory.push(item);
-    
+
     this.updateEquippedSprite();
   }
-  
+
   // set the equipped item
-  public setEquippedItem(index: number){
+  public setEquippedItem(index: number) {
     this.equippedItem = index;
     this.updateEquippedSprite();
   }
-  
+
   // update equipped sprite
-  public updateEquippedSprite(){
-    if(this.inventory[this.equippedItem]){
+  public updateEquippedSprite() {
+    if (this.inventory[this.equippedItem]) {
       this.spriteObject.removeChild(this.currentItemSprite);
       this.currentItemSprite = this.inventory[this.equippedItem].spriteObject;
       this.spriteObject.addChild(this.currentItemSprite);
