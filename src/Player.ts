@@ -128,8 +128,8 @@ export class Player extends Entity {
         // make sure player is active
         if (this.distanceTo(target) < 80) target.damage(25);
       }
-      
-      switch(target.constructor){
+
+      switch (target.constructor) {
         case RemotePlayer:
           if (this.distanceTo(target) < 80) io.emit("playerDamage", target.playerId, 25); // TODO: make this & regular damage pull from same variable for damage and distance values (based on equipped weapon)
           break;
@@ -148,7 +148,7 @@ export class Player extends Entity {
         if (currentMap.tiles[this.tilePosition.x - (stepX - 1)] != undefined) {
           let currentTile =
             currentMap.tiles[this.tilePosition.x - (stepX - 1)][
-              this.tilePosition.y - (stepY - 1)
+            this.tilePosition.y - (stepY - 1)
             ];
           if (currentTile != undefined) {
             if (currentTile.tileType == TILE_TYPE.WALL) {

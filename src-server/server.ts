@@ -10,23 +10,23 @@ let players = new Map();
 
 io.on('connection', (socket) => {
   console.log(socket.id + " connected");
-  
+
   socket.on('playerUpdate', (player) => {
     // add to players variable
     players.set(socket.id, player);
-    
+
     // send update to other clients
     //console.log(player);
-    socket.broadcast.emit('playerUpdate', {id: socket.id, data: player});
+    socket.broadcast.emit('playerUpdate', { id: socket.id, data: player });
   });
-  
+
   socket.on('playerDamage', (id, amount) => {
     console.log("Player " + id + " damaged for " + amount);
-    
+
     // tell the client they were damaged
     io.to(id).emit('playerDamage', amount);
   })
-    
+
   socket.on('disconnect', (player) => {
     players.delete(socket.id); // remove from players
     socket.broadcast.emit('playerDisconnect', socket.id); // tell other players they left

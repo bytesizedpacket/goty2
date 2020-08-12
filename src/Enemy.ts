@@ -49,7 +49,7 @@ export class Enemy extends Entity {
       if (this.movementType != MOVEMENT_TYPE.FLY) {
         // are we now intersecting with something?
         let tthis = this; // gotta work around this jank lol
-        entities.forEach(function(entityB: Entity) {
+        entities.forEach(function (entityB: Entity) {
           if (
             entityB instanceof Enemy &&
             entityB != tthis &&

@@ -21,7 +21,7 @@ export let statusDiv = document.getElementById("status");
 export let levelDiv = document.getElementById("level");
 export let ghettoConsole = document.getElementById("ghettoconsole"); // for coding on my ipad where i don't get the regular console (thanks apple)
 
-export let debugLog = function(text: string){
+export let debugLog = function (text: string) {
   console.log(text);
   //ghettoConsole.innerHTML += "<br/>" + text;
 }
@@ -60,7 +60,7 @@ export let app = new PIXI.Application({ width: viewWidth, height: viewHeight });
 document.body.appendChild(app.view);
 
 // connect socketio
-io.on('connect', function(socket: any) {
+io.on('connect', function (socket: any) {
   connected = true;
   debugLog("Connected to server!");
 });
@@ -128,42 +128,42 @@ let initLevel = function (delta?: any) {
     };
     healthPack.position = pos;
   }
-  
+
   // the server has sent us new info about a player
   // shit contains 'id' and 'remotePlayer' object
-  io.on('playerUpdate', function(shit: any) {
+  io.on('playerUpdate', function (shit: any) {
     let id = shit.id;
     let data = shit.data;
     let playerExists = false;
     entities.forEach(function (entity: Entity) {
       // is this a player?
-      if(entity instanceof RemotePlayer){
+      if (entity instanceof RemotePlayer) {
         // does its id match?
-        if(entity.playerId == id){
+        if (entity.playerId == id) {
           playerExists = true;
           entity.playerData = data;
         }
       }
     });
-    
-    if(!playerExists){
+
+    if (!playerExists) {
       // create new RemotePlayer
       let newRemotePlayer = new RemotePlayer("player", app, id, data)
     }
   });
-  
+
   // we have been damaged!
   io.on('playerDamage', (amount: number) => {
     player.damage(amount);
   });
-  
+
   // the server told us a player disconnected
   io.on('playerDisconnect', (id: string) => {
     entities.forEach(function (entity: Entity) {
       // is this a player?
-      if(entity instanceof RemotePlayer){
+      if (entity instanceof RemotePlayer) {
         // does its id match?
-        if(entity.playerId == id){
+        if (entity.playerId == id) {
           entity.destroy(); // remove the player from the gamea
         }
       }
@@ -182,21 +182,21 @@ let gameLoop = function (delta: any) {
   damageNumbers.forEach(function (damageNumber: DamageNumber) {
     damageNumber.tick();
   });
-  
+
   // update player position
   //if(connected){
-  if(updateTimer <= 0){
+  if (updateTimer <= 0) {
     io.emit('playerUpdate', {
       position: player.position,
       health: player.health,
       state: player.state
     });
     updateTimer = updateInterval;
-    }else{
-      updateTimer--;
-    }
+  } else {
+    updateTimer--;
+  }
   //}
-    
+
   // make sure every entity handles their ticks and stays inside the map
   entities.forEach(function (entity: Entity) {
     // don't tick it if it's inactive
