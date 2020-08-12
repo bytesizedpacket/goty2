@@ -24,9 +24,6 @@ export class Item {
     // keep this consistent
     currentSprite.name = spriteName;
 
-    // make sure we can click it
-    currentSprite.interactive = true;
-
     this.spriteObject = currentSprite;
     
     this.labelText = labelText;

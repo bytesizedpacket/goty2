@@ -55,6 +55,7 @@ let assets = [
   { name: "tile-wall", url: "assets/sprites/Tile-wall.png" },
   { name: "healthpack", url: "assets/sprites/HealthPack.png" },
   { name: "sword", url: "assets/sprites/Sword.png" },
+  { name: "gun", url: "assets/sprites/Gun.png" },
 ];
 // these will be populated later
 export let entities: Entity[] = [];
@@ -202,7 +203,7 @@ let initLevel = function (delta?: any) {
       name: playerName,
       inventory: inventory,
       equippedItem: player.equippedItem,
-      });
+    });
     io.emit('statusMessage', " went AFK");
   });
   

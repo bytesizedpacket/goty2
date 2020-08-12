@@ -37,6 +37,7 @@ export class Player extends Entity {
     console.log("Player has been initialized", this);
     
     this.addItemToInventory(new Item("sword", app, "Sword"));
+    this.addItemToInventory(new Item("gun", app, "Gun"));
     
     this.inventoryDisplay = document.getElementById("inventoryDisplay");
   }
@@ -76,6 +77,14 @@ export class Player extends Entity {
           this.velX = this.speed * -1;
         } else {
           if (!Keyboard.isKeyDown("KeyD", "ArrowRight")) this.velX = 0;
+        }
+        
+        // change weapon!
+        if(Keyboard.isKeyDown("KeyE")) {
+          this.setEquippedItem(1);
+        }
+        if(Keyboard.isKeyDown("KeyQ")) {
+          this.setEquippedItem(0);
         }
       }
 

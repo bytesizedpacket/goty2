@@ -109,7 +109,7 @@ export class Entity {
 
       app.stage.addChild(this.healthBar);
     }
-
+    
     if (labelText) {
       this.labelText = labelText;
       this.label = new Text(labelText, { font: "30px Roboto Condensed", fill: "white", dropShadow: true, dropShadowBlur: 2 });
@@ -193,16 +193,16 @@ export class Entity {
     if (this.health <= 0) {
       this.health = 0; // prevents the healthbar from descending into deader-than-dead
       this.state = STATE.DEAD;
-      if (this.label) {
+      if(this.label){
         statusText.text = this.label.text + " died";
       }
     }
-
-    if (this.labelText) {
-      if (this.state == STATE.AFK) {
+    
+    if(this.labelText){
+      if(this.state == STATE.AFK){
         this.label.text = this.labelText + " (AFK)";
         this.healthBar.visible = false;
-      } else {
+      }else{
         this.label.text = this.labelText;
         this.healthBar.visible = true;
       }
@@ -233,26 +233,29 @@ export class Entity {
     // call the player's interact() on this
     player.interact(this);
   }
-
+  
   // add an item to this entity's inventory
   public addItemToInventory(item: Item) {
     this.inventory.push(item);
-
-    if (this.inventory.length == 1) {
-      this.currentItemSprite = item.spriteObject;
-      this.spriteObject.addChild(item.spriteObject);
-    }
-
+    
     this.updateEquippedSprite();
   }
-
+  
+  // set the equipped item
+  public setEquippedItem(index: number){
+    this.equippedItem = index;
+    this.updateEquippedSprite();
+  }
+  
   // update equipped sprite
-  public updateEquippedSprite() {
-    this.spriteObject.removeChild(this.currentItemSprite);
-    this.currentItemSprite = this.inventory[this.equippedItem].spriteObject;
-    this.spriteObject.addChild(this.currentItemSprite);
-    this.currentItemSprite.y += this.spriteObject.height / 2 - 3;
-    this.currentItemSprite.x += this.spriteObject.width + 5;
+  public updateEquippedSprite(){
+    if(this.inventory[this.equippedItem]){
+      this.spriteObject.removeChild(this.currentItemSprite);
+      this.currentItemSprite = this.inventory[this.equippedItem].spriteObject;
+      this.spriteObject.addChild(this.currentItemSprite);
+      this.currentItemSprite.y = this.spriteObject.height / 2 - 3;
+      this.currentItemSprite.x = this.spriteObject.width + 5;
+    }
   }
 
   // what is the distance to the specified entity?
