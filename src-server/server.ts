@@ -20,6 +20,16 @@ io.on('connection', (socket) => {
     //console.log(player);
     socket.broadcast.emit('playerUpdate', { id: socket.id, data: player });
   });
+  
+  // send status message to other players
+  socket.on('statusMessage', (message: string) => {
+    let player = players.get(socket.id);
+    if(player && player.name){
+      socket.broadcast.emit('statusMessage', player.name + message);
+    }else{
+      socket.broadcast.emit('statusMessage', socket.id + message);
+    }
+  });
 
   socket.on('playerDamage', (id: string, amount: number) => {
     console.log("Player " + id + " damaged for " + amount);

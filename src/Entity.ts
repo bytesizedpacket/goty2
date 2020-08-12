@@ -12,6 +12,7 @@ export enum STATE {
   ACTIVE,
   INACTIVE, // won't move or do anything
   DEAD, // will remove itself from the game/memory
+  AFK, // other player is afk!
 }
 
 export enum MOVEMENT_TYPE {
@@ -31,6 +32,7 @@ export interface Position {
 export class Entity {
   public spriteObject: Sprite;
   public label: Text;
+  public labelText: string;
   public healthBar: Container;
   public movementType: MOVEMENT_TYPE;
   public outlineHealthBar: Graphics;
@@ -101,16 +103,16 @@ export class Entity {
       this.frontHealthBar.endFill();
       this.healthBar.addChild(this.frontHealthBar);
 
-      if (labelText) {
-        this.label = new Text(labelText, { font: "30px Roboto Condensed", fill: "white", dropShadow: true, dropShadowBlur: 2 });
-        this.label.height *= 0.3;
-        this.label.width *= 0.3;
-        this.label.x -= (this.label.width / 2) - 10;
-        this.label.y -= this.spriteObject.height + this.label.height + 2;
-        this.healthBar.addChild(this.label);
-      }
-
       app.stage.addChild(this.healthBar);
+    }
+    
+    if (labelText) {
+      this.labelText = labelText;
+      this.label = new Text(labelText, { font: "30px Roboto Condensed", fill: "white", dropShadow: true, dropShadowBlur: 2 });
+      this.label.scale.set(0.3, 0.3);
+      this.label.x -= (this.label.width / 2) - 10;
+      this.label.y -= this.spriteObject.height/2 + 2;
+      this.spriteObject.addChild(this.label);
     }
 
     if (movementType) {
@@ -188,6 +190,16 @@ export class Entity {
       this.state = STATE.DEAD;
       if(this.label.text){
         statusText.text = this.label.text + " died";
+      }
+    }
+    
+    if(this.labelText){
+      if(this.state == STATE.AFK){
+        this.label.text = this.labelText + " (AFK)";
+        this.healthBar.visible = false;
+      }else{
+        this.label.text = this.labelText;
+        this.healthBar.visible = true;
       }
     }
 

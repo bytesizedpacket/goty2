@@ -156,6 +156,11 @@ let initLevel = function (delta?: any) {
       statusText.text = newPlayer.label.text + " connected";
     }
   });
+  
+  // receive status message!
+  io.on('statusMessage', (message: string) => {
+    statusText.text = message;
+  });
 
   // we have been damaged!
   io.on('playerDamage', (amount: number) => {
@@ -174,6 +179,24 @@ let initLevel = function (delta?: any) {
         }
       }
     });
+  });
+  
+  // make player inactive when tab unfocuses
+  window.addEventListener('blur', function(){
+    player.state = STATE.AFK;
+    io.emit('playerUpdate', {
+      position: player.position,
+      health: player.health,
+      state: player.state,
+      name: playerName
+    });
+    io.emit('statusMessage', " went AFK");
+  });
+  
+  // reactivate player when they come back
+  window.addEventListener('focus', function(){
+    player.state = STATE.ACTIVE;
+    io.emit('statusMessage', " is no longer AFK");
   });
   
   // status text (starts blank)
