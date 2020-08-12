@@ -131,7 +131,7 @@ export class Player extends Entity {
       
       switch(target.constructor){
         case RemotePlayer:
-          io.emit("playerDamage", target.playerId, 25); // TODO: make this & regular damage pull from same variable
+          if (this.distanceTo(target) < 80) io.emit("playerDamage", target.playerId, 25); // TODO: make this & regular damage pull from same variable for damage and distance values (based on equipped weapon)
           break;
         default:
           // any entity
