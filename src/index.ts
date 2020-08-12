@@ -19,6 +19,7 @@ import { DamageNumber } from "./DamageNumber";
 const urlParams = new URLSearchParams(window.location.search);
 export let playerName: string = urlParams.get("name"); // use ?name= to name the player
 console.log("Player name: " + playerName);
+export let statusText: PIXI.Text;
 export let statusDiv = document.getElementById("status");
 export let levelDiv = document.getElementById("level");
 export let ghettoConsole = document.getElementById("ghettoconsole"); // for coding on my ipad where i don't get the regular console (thanks apple)
@@ -150,7 +151,9 @@ let initLevel = function (delta?: any) {
 
     if (!playerExists) {
       // create new RemotePlayer
-      new RemotePlayer("enemy-default", app, id, data);
+      let newPlayer = new RemotePlayer("enemy-default", app, id, data);
+      
+      statusText.text = newPlayer.label.text + " connected";
     }
   });
 
@@ -166,11 +169,19 @@ let initLevel = function (delta?: any) {
       if (entity instanceof RemotePlayer) {
         // does its id match?
         if (entity.playerId == id) {
+          statusText.text = entity.label.text + " disconnected";
           entity.destroy(); // remove the player from the gamea
         }
       }
     });
   });
+  
+  // status text (starts blank)
+  statusText = new PIXI.Text("", {font: "8px Roboto", fill: "white", dropShadow: true})
+  statusText.scale.set(0.3, 0.3);
+  statusText.x += 5;
+  statusText.y += 5;
+  app.stage.addChild(statusText);
 
   // set the gameState to gameLoop;
   gameState = gameLoop;

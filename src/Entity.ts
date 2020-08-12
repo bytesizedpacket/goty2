@@ -4,7 +4,7 @@ import { Container } from "pixi.js";
 import { Text } from "pixi.js";
 import { Application } from "pixi.js";
 import { entities, currentMap } from "./index";
-import { app, player, viewWidth, viewHeight } from "./index";
+import { app, player, viewWidth, viewHeight, statusText } from "./index";
 import { DamageNumber } from "./DamageNumber";
 import { TILE_TYPE } from "./Tile";
 
@@ -186,6 +186,9 @@ export class Entity {
     if (this.health <= 0) {
       this.health = 0; // prevents the healthbar from descending into deader-than-dead
       this.state = STATE.DEAD;
+      if(this.label.text){
+        statusText.text = this.label.text + " died";
+      }
     }
 
     this.updateSprite();
