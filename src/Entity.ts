@@ -184,6 +184,15 @@ export class Entity {
     let toPlayerY = player.position.y - this.position.y;
 
     this.spriteObject.position.set(offsetX - toPlayerX, offsetY - toPlayerY);
+
+    if (this.faceDirection == DIRECTION.EAST) {
+      this.spriteObject.scale.set(-1, 1);
+      this.spriteObject.position.x += this.spriteObject.width;
+      this.healthBar.position.x = this.spriteObject.x - (this.healthBar.width / 2) + 1;
+    } else {
+      this.spriteObject.scale.set(1, 1);
+      this.healthBar.position.x = this.spriteObject.x;
+    }
   }
 
   // runs every frame

@@ -203,6 +203,7 @@ let initLevel = function (delta?: any) {
       name: playerName,
       inventory: inventory,
       equippedItem: player.equippedItem,
+      faceDirection: player.faceDirection,
     });
     io.emit('statusMessage', " went AFK");
   });
@@ -253,6 +254,7 @@ let gameLoop = function (delta: any) {
       name: playerName,
       inventory: inventory,
       equippedItem: player.equippedItem,
+      faceDirection: player.faceDirection,
     });
     updateTimer = updateInterval;
   } else {

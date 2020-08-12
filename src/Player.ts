@@ -63,7 +63,6 @@ export class Player extends Entity {
 
         if (Keyboard.isKeyDown("KeyD", "ArrowRight")) {
           this.velX = this.speed;
-          this.spriteObject.scale.set(-1, 1);
           this.faceDirection = DIRECTION.EAST;
         } else {
           if (!Keyboard.isKeyDown("KeyA", "ArrowLeft")) this.velX = 0;
@@ -77,7 +76,6 @@ export class Player extends Entity {
 
         if (Keyboard.isKeyDown("KeyA", "ArrowLeft")) {
           this.velX = this.speed * -1;
-          this.spriteObject.scale.set(1, 1);
           this.faceDirection = DIRECTION.WEST;
         } else {
           if (!Keyboard.isKeyDown("KeyD", "ArrowRight")) this.velX = 0;
@@ -136,8 +134,11 @@ export class Player extends Entity {
     );
 
     if (this.faceDirection == DIRECTION.EAST) {
+      this.spriteObject.scale.set(-1, 1);
       this.spriteObject.position.x += this.spriteObject.width;
       this.healthBar.position.x = this.spriteObject.x - this.healthBar.width + 1;
+    } else {
+      this.spriteObject.scale.set(1, 1);
     }
   }
 

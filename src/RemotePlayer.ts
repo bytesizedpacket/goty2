@@ -1,6 +1,6 @@
 import { Sprite } from "pixi.js";
 import { Application } from "pixi.js";
-import { Entity, STATE, MOVEMENT_TYPE, Position } from "./Entity";
+import { Entity, STATE, MOVEMENT_TYPE, Position, DIRECTION } from "./Entity";
 import { player, debugLog, app } from "./index";
 import { Item } from "./Item";
 import {
@@ -14,12 +14,12 @@ import {
 // main remote player object
 export class RemotePlayer extends Entity {
   public playerId: string;
-  public playerData: { position: { x: number, y: number }, health: number, state: STATE, name: string, inventory: any, equippedItem: any };
+  public playerData: { position: { x: number, y: number }, health: number, state: STATE, name: string, inventory: any, equippedItem: any, faceDirection: DIRECTION };
   constructor(
     spriteName: string,
     app: Application,
     playerId: string,
-    playerData: { position: { x: number, y: number }, health: number, state: STATE, name: string, inventory: any, equippedItem: any },
+    playerData: { position: { x: number, y: number }, health: number, state: STATE, name: string, inventory: any, equippedItem: any, faceDirection: DIRECTION },
     speed?: number,
     displayHealthBar?: boolean,
     movementType?: MOVEMENT_TYPE,
@@ -44,6 +44,7 @@ export class RemotePlayer extends Entity {
     this.health = this.playerData.health;
     this.state = this.playerData.state;
     this.equippedItem = this.playerData.equippedItem;
+    this.faceDirection = this.playerData.faceDirection;
 
     this.inventory = [];
     if (this.playerData.inventory) this.playerData.inventory.forEach((itemData: any) => {
