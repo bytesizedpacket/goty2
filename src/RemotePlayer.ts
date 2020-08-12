@@ -19,7 +19,7 @@ export class RemotePlayer extends Entity {
     spriteName: string,
     app: Application,
     playerId: string,
-    playerData: { position: { x: number, y: number }, health: number, state: STATE, name: string, inventory: any, equippedItem: any  },
+    playerData: { position: { x: number, y: number }, health: number, state: STATE, name: string, inventory: any, equippedItem: any },
     speed?: number,
     displayHealthBar?: boolean,
     movementType?: MOVEMENT_TYPE,
@@ -43,9 +43,9 @@ export class RemotePlayer extends Entity {
     this.position = this.playerData.position;
     this.health = this.playerData.health;
     this.state = this.playerData.state;
-    
+
     this.inventory = [];
-    this.playerData.inventory.forEach((itemData: any) => {
+    if (this.playerData.inventory) this.playerData.inventory.forEach((itemData: any) => {
       this.addItemToInventory(new Item(itemData.spriteName, app, itemData.name, itemData.amount));
     });
 
