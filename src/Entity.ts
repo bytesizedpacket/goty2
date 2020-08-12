@@ -1,6 +1,7 @@
 import { Sprite } from "pixi.js";
 import { Graphics } from "pixi.js";
 import { Container } from "pixi.js";
+import { Text } from "pixi.js";
 import { Application } from "pixi.js";
 import { entities, currentMap } from "./index";
 import { app, player, viewWidth, viewHeight } from "./index";
@@ -29,6 +30,7 @@ export interface Position {
 // generic entity class
 export class Entity {
   public spriteObject: Sprite;
+  public label: Text;
   public healthBar: Container;
   public movementType: MOVEMENT_TYPE;
   public outlineHealthBar: Graphics;
@@ -48,7 +50,8 @@ export class Entity {
     speed?: number,
     displayHealthBar?: boolean,
     movementType?: MOVEMENT_TYPE,
-    position?: Position
+    position?: Position,
+    labelText?: string
   ) {
     // create our sprite with the given name
     let currentSprite = new Sprite(app.loader.resources[spriteName].texture);
@@ -97,6 +100,15 @@ export class Entity {
       this.frontHealthBar.drawRect(1, 1, this.spriteObject.width, 2);
       this.frontHealthBar.endFill();
       this.healthBar.addChild(this.frontHealthBar);
+
+      if (labelText) {
+        this.label = new Text(labelText, { font: "30px Roboto Condensed", fill: "white", dropShadow: true, dropShadowBlur: 2 });
+        this.label.height *= 0.3;
+        this.label.width *= 0.3;
+        this.label.x -= (this.label.width / 2) - 10;
+        this.label.y -= this.spriteObject.height + this.label.height + 2;
+        this.healthBar.addChild(this.label);
+      }
 
       app.stage.addChild(this.healthBar);
     }

@@ -148,7 +148,7 @@ let initLevel = function (delta?: any) {
 
     if (!playerExists) {
       // create new RemotePlayer
-      new RemotePlayer("enemy-default", app, id, data)
+      new RemotePlayer("enemy-default", app, id, data, undefined, undefined, undefined, undefined, id);
     }
   });
 

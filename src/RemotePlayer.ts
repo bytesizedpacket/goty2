@@ -1,6 +1,6 @@
 import { Sprite } from "pixi.js";
 import { Application } from "pixi.js";
-import { Entity, STATE, MOVEMENT_TYPE } from "./Entity";
+import { Entity, STATE, MOVEMENT_TYPE, Position } from "./Entity";
 import { player, debugLog } from "./index";
 import {
   entities,
@@ -21,9 +21,11 @@ export class RemotePlayer extends Entity {
     playerData: { position: { x: number, y: number }, health: number, state: STATE },
     speed?: number,
     displayHealthBar?: boolean,
-    movementType?: MOVEMENT_TYPE
+    movementType?: MOVEMENT_TYPE,
+    position?: Position,
+    labelText?: string
   ) {
-    super(spriteName, app, speed, displayHealthBar, movementType);
+    super(spriteName, app, speed, displayHealthBar, movementType, position, labelText);
     this.playerId = playerId;
     this.playerData = playerData;
     debugLog("Player " + playerId + " created!");
