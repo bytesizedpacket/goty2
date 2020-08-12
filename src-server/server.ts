@@ -1,5 +1,6 @@
 let app = require('express')();
 let http = require('http').createServer(app);
+// @ts-ignore
 let io = require("socket.io")(http);
 
 // currently connected players
@@ -20,12 +21,17 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('playerUpdate', { id: socket.id, data: player });
   });
 
-  socket.on('playerDamage', (id, amount) => {
+  socket.on('playerDamage', (id: string, amount: number) => {
     console.log("Player " + id + " damaged for " + amount);
 
     // tell the client they were damaged
     io.to(id).emit('playerDamage', amount);
-  })
+  });
+
+  socket.on('playerDeath', () => {
+    console.log("Player " + socket.id + " has died.");
+    socket.broadcast.emit('playerDeath', socket.id);
+  });
 
   socket.on('disconnect', (player) => {
     players.delete(socket.id); // remove from players
