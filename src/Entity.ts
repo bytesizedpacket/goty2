@@ -180,6 +180,7 @@ export class Entity {
   }
 
   // oof ow ouch that hurt
+  // this ignores the current state of the entity
   public damage(amount: number) {
     // TODO: implement defense stat that affects actual damage output
     this.health -= amount;
@@ -231,7 +232,7 @@ export class Entity {
         if (currentMap.tiles[this.tilePosition.x - (stepX - 1)] != undefined) {
           let currentTile =
             currentMap.tiles[this.tilePosition.x - (stepX - 1)][
-              this.tilePosition.y - (stepY - 1)
+            this.tilePosition.y - (stepY - 1)
             ];
           if (currentTile != undefined) {
             if (currentTile.tileType == TILE_TYPE.WALL) {

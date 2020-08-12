@@ -43,8 +43,7 @@ export class RemotePlayer extends Entity {
 
   // attack player!
   public damage(amount: number) {
-    super.damage(amount);
-
+    if (this.state == STATE.ACTIVE) super.damage(amount);
   }
 
 }
