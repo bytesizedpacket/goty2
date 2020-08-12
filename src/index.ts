@@ -155,11 +155,11 @@ let initLevel = function (delta?: any) {
     if (!playerExists) {
       // create new RemotePlayer
       let newPlayer = new RemotePlayer("enemy-default", app, id, data);
-      
+
       statusText.text = newPlayer.label.text + " connected";
     }
   });
-  
+
   // receive status message!
   io.on('statusMessage', (message: string) => {
     statusText.text = message;
@@ -183,9 +183,9 @@ let initLevel = function (delta?: any) {
       }
     });
   });
-  
+
   // make player inactive when tab unfocuses
-  window.addEventListener('blur', function(){
+  window.addEventListener('blur', function () {
     player.state = STATE.AFK;
     let inventory: any = [];
     player.inventory.forEach(item => {
@@ -195,7 +195,7 @@ let initLevel = function (delta?: any) {
         spriteName: item.spriteObject.name,
       });
     });
-    
+
     io.emit('playerUpdate', {
       position: player.position,
       health: player.health,
@@ -206,15 +206,15 @@ let initLevel = function (delta?: any) {
     });
     io.emit('statusMessage', " went AFK");
   });
-  
+
   // reactivate player when they come back
-  window.addEventListener('focus', function(){
+  window.addEventListener('focus', function () {
     player.state = STATE.ACTIVE;
     io.emit('statusMessage', " is no longer AFK");
   });
-  
+
   // status text (starts blank)
-  statusText = new PIXI.Text("", {font: "8px Roboto", fill: "white", dropShadow: true})
+  statusText = new PIXI.Text("", { font: "8px Roboto", fill: "white", dropShadow: true })
   statusText.scale.set(0.3, 0.3);
   statusText.x += 5;
   statusText.y += 5;
@@ -236,7 +236,7 @@ let gameLoop = function (delta: any) {
   // update player position
   //if(connected){
   if (updateTimer <= 0) {
-    
+
     let inventory: any = [];
     player.inventory.forEach(item => {
       inventory.push({
@@ -245,7 +245,7 @@ let gameLoop = function (delta: any) {
         spriteName: item.spriteObject.name,
       });
     });
-    
+
     io.emit('playerUpdate', {
       position: player.position,
       health: player.health,

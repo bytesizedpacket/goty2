@@ -15,25 +15,25 @@ export class Item {
     app: Application,
     labelText: string,
     amount?: number,
-  ){
+  ) {
     // create our sprite with the given name
     let currentSprite = new Sprite(app.loader.resources[spriteName].texture);
 
     currentSprite.scale.set(-0.75, 0.75);
-    
+
     // keep this consistent
     currentSprite.name = spriteName;
 
     this.spriteObject = currentSprite;
-    
+
     this.labelText = labelText;
-    
-    if(amount){
+
+    if (amount) {
       this.amount = amount;
-    }else{
+    } else {
       this.amount = 1;
     }
-    
+
     this.htmlDiv = document.createElement("div");
     this.htmlDiv.innerHTML = this.amount + "x " + labelText;
   }

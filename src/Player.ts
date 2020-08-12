@@ -35,10 +35,10 @@ export class Player extends Entity {
     super(spriteName, app, speed, displayHealthBar);
     this.movementType = MOVEMENT_TYPE.PLAYER;
     console.log("Player has been initialized", this);
-    
+
     this.addItemToInventory(new Item("sword", app, "Sword"));
     this.addItemToInventory(new Item("gun", app, "Gun"));
-    
+
     this.inventoryDisplay = document.getElementById("inventoryDisplay");
   }
 
@@ -78,12 +78,12 @@ export class Player extends Entity {
         } else {
           if (!Keyboard.isKeyDown("KeyD", "ArrowRight")) this.velX = 0;
         }
-        
+
         // change weapon!
-        if(Keyboard.isKeyDown("KeyE")) {
+        if (Keyboard.isKeyDown("KeyE")) {
           this.setEquippedItem(1);
         }
-        if(Keyboard.isKeyDown("KeyQ")) {
+        if (Keyboard.isKeyDown("KeyQ")) {
           this.setEquippedItem(0);
         }
       }
@@ -117,7 +117,7 @@ export class Player extends Entity {
 
     // since we handle movement here
     this.updateSprite();
-    
+
     this.inventoryDisplay.innerHTML = "";
     this.inventory.forEach(item => {
       this.inventoryDisplay.appendChild(item.htmlDiv);
