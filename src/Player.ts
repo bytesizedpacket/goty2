@@ -36,7 +36,7 @@ export class Player extends Entity {
     this.movementType = MOVEMENT_TYPE.PLAYER;
     console.log("Player has been initialized", this);
     
-    this.addItemToInventory(new Item("enemy-fly", app, "Sword"));
+    this.addItemToInventory(new Item("sword", app, "Sword"));
     
     this.inventoryDisplay = document.getElementById("inventoryDisplay");
   }

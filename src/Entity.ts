@@ -251,8 +251,8 @@ export class Entity {
     this.spriteObject.removeChild(this.currentItemSprite);
     this.currentItemSprite = this.inventory[this.equippedItem].spriteObject;
     this.spriteObject.addChild(this.currentItemSprite);
-    this.currentItemSprite.y += this.spriteObject.height / 2 - 1
-    this.currentItemSprite.x += this.spriteObject.width / 2 - 1
+    this.currentItemSprite.y += this.spriteObject.height / 2 - 3
+    this.currentItemSprite.x += this.spriteObject.width + 5
   }
 
   // what is the distance to the specified entity?

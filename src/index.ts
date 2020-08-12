@@ -54,6 +54,7 @@ let assets = [
   { name: "tile-floor", url: "assets/sprites/Tile-floor.png" },
   { name: "tile-wall", url: "assets/sprites/Tile-wall.png" },
   { name: "healthpack", url: "assets/sprites/HealthPack.png" },
+  { name: "sword", url: "assets/sprites/Sword.png" },
 ];
 // these will be populated later
 export let entities: Entity[] = [];
