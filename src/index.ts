@@ -11,6 +11,7 @@ import { STATE, MOVEMENT_TYPE } from "./Entity";
 import { Player } from "./Player";
 import { RemotePlayer } from "./RemotePlayer";
 import { Enemy } from "./Enemy";
+import { Item } from "./Item";
 import { HealthPack } from "./HealthPack";
 import { DamageNumber } from "./DamageNumber";
 // TODO: reduce size of bundle.js by following this guide https://medium.com/anvoevodin/how-to-set-up-pixijs-v5-project-with-npm-and-webpack-41c18942c88d
@@ -184,12 +185,23 @@ let initLevel = function (delta?: any) {
   // make player inactive when tab unfocuses
   window.addEventListener('blur', function(){
     player.state = STATE.AFK;
+    let inventory: any = [];
+    player.inventory.forEach(item => {
+      inventory.push({
+        name: item.labelText,
+        amount: item.amount,
+        spriteName: item.spriteObject.name,
+      });
+    });
+    
     io.emit('playerUpdate', {
       position: player.position,
       health: player.health,
       state: player.state,
-      name: playerName
-    });
+      name: playerName,
+      inventory: inventory,
+      equippedItem: player.equippedItem,
+      });
     io.emit('statusMessage', " went AFK");
   });
   
@@ -222,11 +234,23 @@ let gameLoop = function (delta: any) {
   // update player position
   //if(connected){
   if (updateTimer <= 0) {
+    
+    let inventory: any = [];
+    player.inventory.forEach(item => {
+      inventory.push({
+        name: item.labelText,
+        amount: item.amount,
+        spriteName: item.spriteObject.name,
+      });
+    });
+    
     io.emit('playerUpdate', {
       position: player.position,
       health: player.health,
       state: player.state,
-      name: playerName
+      name: playerName,
+      inventory: inventory,
+      equippedItem: player.equippedItem,
     });
     updateTimer = updateInterval;
   } else {

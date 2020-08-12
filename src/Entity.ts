@@ -7,6 +7,7 @@ import { entities, currentMap } from "./index";
 import { app, player, viewWidth, viewHeight, statusText } from "./index";
 import { DamageNumber } from "./DamageNumber";
 import { TILE_TYPE } from "./Tile";
+import { Item } from "./Item";
 
 export enum STATE {
   ACTIVE,
@@ -38,6 +39,8 @@ export class Entity {
   public outlineHealthBar: Graphics;
   public rearHealthBar: Graphics;
   public frontHealthBar: Graphics;
+  public equippedItem: number = 0; // index of inventory
+  public inventory: Item[] = [];
   public state: STATE;
   public health: number = 100;
   public speed: number;
@@ -45,6 +48,7 @@ export class Entity {
   public velY: number = 0; // velocity Y
   public position: Position;
   public tilePosition: Position; // this represents our tile location on the map (regular position is exact pixels)
+  private currentItemSprite: Sprite;
 
   constructor(
     spriteName: string,
@@ -111,8 +115,9 @@ export class Entity {
       this.label = new Text(labelText, { font: "30px Roboto Condensed", fill: "white", dropShadow: true, dropShadowBlur: 2 });
       this.label.scale.set(0.3, 0.3);
       this.label.x -= (this.label.width / 2) - 10;
-      this.label.y -= this.spriteObject.height/2 + 2;
-      this.spriteObject.addChild(this.label);
+      this.label.y -= this.spriteObject.height * 2 - 5;
+      this.label.interactive = false; // otherwise players can attack the nametags
+      this.healthBar.addChild(this.label);
     }
 
     if (movementType) {
@@ -227,6 +232,27 @@ export class Entity {
   public onClick(e?: any) {
     // call the player's interact() on this
     player.interact(this);
+  }
+  
+  // add an item to this entity's inventory
+  public addItemToInventory(item: Item) {
+    this.inventory.push(item);
+    
+    if(this.inventory.length == 1){
+      this.currentItemSprite = item.spriteObject;
+      this.spriteObject.addChild(item.spriteObject);
+    }
+    
+    this.updateEquippedSprite();
+  }
+  
+  // update equipped sprite
+  public updateEquippedSprite(){
+    this.spriteObject.removeChild(this.currentItemSprite);
+    this.currentItemSprite = this.inventory[this.equippedItem].spriteObject;
+    this.spriteObject.addChild(this.currentItemSprite);
+    this.currentItemSprite.y += this.spriteObject.height / 2 - 1
+    this.currentItemSprite.x += this.spriteObject.width / 2 - 1
   }
 
   // what is the distance to the specified entity?

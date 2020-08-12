@@ -12,6 +12,7 @@ import {
 import { checkSpriteCollision, io } from "./index";
 import { Entity, STATE } from "./Entity";
 import { Enemy } from "./Enemy";
+import { Item } from "./Item"
 import { RemotePlayer } from "./RemotePlayer";
 // @ts-ignore
 import * as Keyboard from "pixi.js-keyboard";
@@ -24,6 +25,7 @@ let statusDiv = document.getElementById("status");
 // main player object
 export class Player extends Entity {
   public score: number = 0;
+  private inventoryDisplay: any;
   constructor(
     spriteName: string,
     app: Application,
@@ -33,6 +35,10 @@ export class Player extends Entity {
     super(spriteName, app, speed, displayHealthBar);
     this.movementType = MOVEMENT_TYPE.PLAYER;
     console.log("Player has been initialized", this);
+    
+    this.addItemToInventory(new Item("enemy-fly", app, "Sword"));
+    
+    this.inventoryDisplay = document.getElementById("inventoryDisplay");
   }
 
   // this will run every frame
@@ -102,6 +108,11 @@ export class Player extends Entity {
 
     // since we handle movement here
     this.updateSprite();
+    
+    this.inventoryDisplay.innerHTML = "";
+    this.inventory.forEach(item => {
+      this.inventoryDisplay.appendChild(item.htmlDiv);
+    });
   }
 
   // override the entity one to always put us in the center
