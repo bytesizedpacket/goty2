@@ -112,6 +112,13 @@ export class Player extends Entity {
     );
   }
 
+  // tell the server we died
+  public damage(amount: number) {
+    super.damage(amount);
+
+    if (this.health <= 0) io.emit('playerDeath', true); // tell the server we died
+  }
+
   // sets the player's current score
   public setScore(score: number) {
     this.score = score;
@@ -131,7 +138,7 @@ export class Player extends Entity {
 
       switch (target.constructor) {
         case RemotePlayer:
-          if (this.distanceTo(target) < 80) io.emit("playerDamage", target.playerId, 25); // TODO: make this & regular damage pull from same variable for damage and distance values (based on equipped weapon)
+          if (this.distanceTo(target) < 80 && target.state == STATE.ACTIVE) io.emit("playerDamage", target.playerId, 25); // TODO: make this & regular damage pull from same variable for damage and distance values (based on equipped weapon)
           break;
         default:
           // any entity
