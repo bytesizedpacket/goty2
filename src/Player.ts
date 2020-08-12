@@ -1,5 +1,5 @@
 import { TILE_TYPE } from "./Tile";
-import { MOVEMENT_TYPE } from "./Entity";
+import { MOVEMENT_TYPE, DIRECTION } from "./Entity";
 import { HealthPack } from "./HealthPack";
 import { Application } from "pixi.js";
 import {
@@ -63,6 +63,8 @@ export class Player extends Entity {
 
         if (Keyboard.isKeyDown("KeyD", "ArrowRight")) {
           this.velX = this.speed;
+          this.spriteObject.scale.set(-1, 1);
+          this.faceDirection = DIRECTION.EAST;
         } else {
           if (!Keyboard.isKeyDown("KeyA", "ArrowLeft")) this.velX = 0;
         }
@@ -75,6 +77,8 @@ export class Player extends Entity {
 
         if (Keyboard.isKeyDown("KeyA", "ArrowLeft")) {
           this.velX = this.speed * -1;
+          this.spriteObject.scale.set(1, 1);
+          this.faceDirection = DIRECTION.WEST;
         } else {
           if (!Keyboard.isKeyDown("KeyD", "ArrowRight")) this.velX = 0;
         }
@@ -130,6 +134,11 @@ export class Player extends Entity {
       viewWidth / 2 - this.spriteObject.width / 2,
       viewHeight / 2 - this.spriteObject.height / 2
     );
+
+    if (this.faceDirection == DIRECTION.EAST) {
+      this.spriteObject.position.x += this.spriteObject.width;
+      this.healthBar.position.x = this.spriteObject.x - this.healthBar.width + 1;
+    }
   }
 
   // tell the server we died

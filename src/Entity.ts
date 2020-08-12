@@ -23,6 +23,11 @@ export enum MOVEMENT_TYPE {
   PLAYER = "player",
 }
 
+export enum DIRECTION {
+  WEST = "west",
+  EAST = "east",
+}
+
 // we use this independently from the screen/sprite coordingates
 export interface Position {
   x: number;
@@ -48,6 +53,7 @@ export class Entity {
   public velY: number = 0; // velocity Y
   public position: Position;
   public tilePosition: Position; // this represents our tile location on the map (regular position is exact pixels)
+  public faceDirection: DIRECTION;
   private currentItemSprite: Sprite;
 
   constructor(
@@ -143,6 +149,8 @@ export class Entity {
     this.spriteObject.on("mousedown", function (e: any) {
       tthis.onClick(e);
     });
+
+    this.faceDirection = DIRECTION.WEST;
 
     // add it to the game
     app.stage.addChild(this.spriteObject);
@@ -263,8 +271,8 @@ export class Entity {
       this.spriteObject.removeChild(this.currentItemSprite);
       this.currentItemSprite = this.inventory[this.equippedItem].spriteObject;
       this.spriteObject.addChild(this.currentItemSprite);
-      this.currentItemSprite.y = this.spriteObject.height / 2 - 3;
-      this.currentItemSprite.x = this.spriteObject.width + 5;
+      this.currentItemSprite.y = this.spriteObject.height / 2 - 8;
+      this.currentItemSprite.x = -9;
     }
   }
 

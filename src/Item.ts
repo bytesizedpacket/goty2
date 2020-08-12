@@ -19,7 +19,7 @@ export class Item {
     // create our sprite with the given name
     let currentSprite = new Sprite(app.loader.resources[spriteName].texture);
 
-    currentSprite.scale.set(-0.75, 0.75);
+    currentSprite.scale.set(0.75, 0.75);
 
     // keep this consistent
     currentSprite.name = spriteName;
