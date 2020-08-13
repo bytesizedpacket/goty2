@@ -2,7 +2,7 @@
   "levels": [
     {
       "startPos": {
-        "x": 8,
+        "x": 7,
         "y": 5
       },
       "tiles": [
@@ -14,7 +14,7 @@
             "type": "tile-wall"
           },
           {
-            "type": "tile-wall"
+            "type": "tile-floor"
           },
           {
             "type": "tile-wall"
@@ -23,13 +23,16 @@
             "type": "tile-wall"
           },
           {
-            "type": "tile-wall"
+            "type": "tile-floor"
           },
           {
             "type": "tile-wall"
           },
           {
             "type": "tile-wall"
+          },
+          {
+            "type": "tile-floor"
           },
           {
             "type": "tile-wall"
@@ -40,7 +43,7 @@
         ],
         [
           {
-            "type": "tile-floor"
+            "type": "tile-wall"
           },
           {
             "type": "tile-floor"
@@ -68,11 +71,14 @@
           },
           {
             "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
           }
         ],
         [
           {
-            "type": "tile-floor"
+            "type": "tile-wall"
           },
           {
             "type": "tile-floor"
@@ -100,11 +106,14 @@
           },
           {
             "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
           }
         ],
         [
           {
-            "type": "tile-floor"
+            "type": "tile-wall"
           },
           {
             "type": "tile-floor"
@@ -132,11 +141,14 @@
           },
           {
             "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
           }
         ],
         [
           {
-            "type": "tile-floor"
+            "type": "tile-wall"
           },
           {
             "type": "tile-floor"
@@ -164,11 +176,14 @@
           },
           {
             "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
           }
         ],
         [
           {
-            "type": "tile-floor"
+            "type": "tile-wall"
           },
           {
             "type": "tile-floor"
@@ -196,11 +211,14 @@
           },
           {
             "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
           }
         ],
         [
           {
-            "type": "tile-floor"
+            "type": "tile-wall"
           },
           {
             "type": "tile-floor"
@@ -228,11 +246,14 @@
           },
           {
             "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
           }
         ],
         [
           {
-            "type": "tile-floor"
+            "type": "tile-wall"
           },
           {
             "type": "tile-floor"
@@ -260,11 +281,14 @@
           },
           {
             "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
           }
         ],
         [
           {
-            "type": "tile-floor"
+            "type": "tile-wall"
           },
           {
             "type": "tile-floor"
@@ -292,6 +316,184 @@
           },
           {
             "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
+          }
+        ],
+        [
+          {
+            "type": "tile-wall"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
+          }
+        ],
+        [
+          {
+            "type": "tile-wall"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
+          }
+        ],
+        [
+          {
+            "type": "tile-wall"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
+          }
+        ],
+        [
+          {
+            "type": "tile-wall"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
+          }
+        ],
+        [
+          {
+            "type": "tile-wall"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-floor"
+          },
+          {
+            "type": "tile-wall"
           }
         ],
         [
@@ -302,7 +504,7 @@
             "type": "tile-wall"
           },
           {
-            "type": "tile-wall"
+            "type": "tile-floor"
           },
           {
             "type": "tile-wall"
@@ -311,13 +513,16 @@
             "type": "tile-wall"
           },
           {
-            "type": "tile-wall"
+            "type": "tile-floor"
           },
           {
             "type": "tile-wall"
           },
           {
             "type": "tile-wall"
+          },
+          {
+            "type": "tile-floor"
           },
           {
             "type": "tile-wall"
