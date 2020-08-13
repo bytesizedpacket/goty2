@@ -3,6 +3,28 @@ let http = require('http').createServer(app);
 // @ts-ignore
 let io = require("socket.io")(http);
 
+interface PlayerData {
+  position: { x: number, y: number },
+  health: number,
+  state: STATE,
+  name: string,
+  inventory: any,
+  equippedItem: any,
+  faceDirection: DIRECTION,
+}
+
+enum DIRECTION {
+  WEST = "west",
+  EAST = "east",
+}
+
+enum STATE {
+  ACTIVE,
+  INACTIVE, // won't move or do anything
+  DEAD, // will remove itself from the game/memory
+  AFK, // other player is afk!
+}
+
 // currently connected players
 // map of ID -> Player object
 let players = new Map();
@@ -12,7 +34,7 @@ let players = new Map();
 io.on('connection', (socket) => {
   console.log(socket.id + " connected");
 
-  socket.on('playerUpdate', (player) => {
+  socket.on('playerUpdate', (player: PlayerData) => {
     // add to players variable
     players.set(socket.id, player);
 
@@ -20,13 +42,13 @@ io.on('connection', (socket) => {
     //console.log(player);
     socket.broadcast.emit('playerUpdate', { id: socket.id, data: player });
   });
-  
+
   // send status message to other players
   socket.on('statusMessage', (message: string) => {
     let player = players.get(socket.id);
-    if(player && player.name){
+    if (player && player.name) {
       socket.broadcast.emit('statusMessage', player.name + message);
-    }else{
+    } else {
       socket.broadcast.emit('statusMessage', socket.id + message);
     }
   });

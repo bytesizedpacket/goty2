@@ -238,6 +238,7 @@ let gameLoop = function (delta: any) {
   //if(connected){
   if (updateTimer <= 0) {
 
+    // TODO: move all of this to PlayerData interface and create using player class
     let inventory: any = [];
     player.inventory.forEach(item => {
       inventory.push({

@@ -11,15 +11,25 @@ import {
   viewWidth
 } from "./index";
 
+export interface PlayerData {
+  position: { x: number, y: number },
+  health: number,
+  state: STATE,
+  name: string,
+  inventory: any,
+  equippedItem: any,
+  faceDirection: DIRECTION,
+}
+
 // main remote player object
 export class RemotePlayer extends Entity {
   public playerId: string;
-  public playerData: { position: { x: number, y: number }, health: number, state: STATE, name: string, inventory: any, equippedItem: any, faceDirection: DIRECTION };
+  public playerData: PlayerData;
   constructor(
     spriteName: string,
     app: Application,
     playerId: string,
-    playerData: { position: { x: number, y: number }, health: number, state: STATE, name: string, inventory: any, equippedItem: any, faceDirection: DIRECTION },
+    playerData: PlayerData,
     speed?: number,
     displayHealthBar?: boolean,
     movementType?: MOVEMENT_TYPE,
