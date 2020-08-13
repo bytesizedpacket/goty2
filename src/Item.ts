@@ -1,5 +1,6 @@
 import { Sprite } from "pixi.js";
 import { Application } from "pixi.js";
+import { Entity } from "./Entity";
 
 // generic item class
 export class Item {
@@ -33,5 +34,10 @@ export class Item {
 
     this.htmlDiv = document.createElement("div");
     this.htmlDiv.innerHTML = this.amount + "x " + labelText;
+  }
+
+  // use this item on the given target
+  public use(from: Entity, target: any) {
+    console.log(from.labelText + " used " + this.labelText + " on " + target.labelText);
   }
 }

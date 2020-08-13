@@ -18,6 +18,7 @@ import { RemotePlayer } from "./RemotePlayer";
 import * as Keyboard from "pixi.js-keyboard";
 // @ts-ignore
 import * as Mouse from "pixi.js-mouse";
+import { Weapon } from "./Weapon";
 
 // useful variables
 let statusDiv = document.getElementById("status");
@@ -36,8 +37,8 @@ export class Player extends Entity {
     this.movementType = MOVEMENT_TYPE.PLAYER;
     console.log("Player has been initialized", this);
 
-    this.addItemToInventory(new Item("sword", app, "Sword"));
-    this.addItemToInventory(new Item("gun", app, "Gun"));
+    this.addItemToInventory(new Weapon("sword", app, "Sword", 25));
+    this.addItemToInventory(new Weapon("gun", app, "Gun", 50));
 
     this.inventoryDisplay = document.getElementById("inventoryDisplay");
   }
@@ -146,17 +147,7 @@ export class Player extends Entity {
     if (this.state == STATE.ACTIVE) {
       // make sure we aren't clicking ourselves
       if (!(target instanceof Player)) {
-        // make sure player is active
-        if (this.distanceTo(target) < 80) target.damage(25);
-      }
-
-      switch (target.constructor) {
-        case RemotePlayer:
-          if (this.distanceTo(target) < 80 && target.state == STATE.ACTIVE) io.emit("playerDamage", target.playerId, 25); // TODO: make this & regular damage pull from same variable for damage and distance values (based on equipped weapon)
-          break;
-        default:
-          // any entity
-          break;
+        this.inventory[this.equippedItem].use(this, target);
       }
     }
   }
