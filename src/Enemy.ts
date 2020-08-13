@@ -1,13 +1,10 @@
-import { Sprite } from "pixi.js";
 import { Application } from "pixi.js";
-import { Entity, STATE, MOVEMENT_TYPE } from "./Entity";
+import { Entity, MOVEMENT_TYPE } from "./Entity";
 import { player } from "./index";
 import {
   entities,
   checkSpriteCollision,
   currentDelta,
-  viewHeight,
-  viewWidth
 } from "./index";
 
 // main enemy object

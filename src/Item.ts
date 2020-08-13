@@ -1,8 +1,5 @@
 import { Sprite } from "pixi.js";
-import { Graphics } from "pixi.js";
-import { Container } from "pixi.js";
 import { Application } from "pixi.js";
-import { app, player, viewWidth, viewHeight, statusText } from "./index";
 
 // generic item class
 export class Item {

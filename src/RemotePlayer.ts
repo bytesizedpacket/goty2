@@ -1,4 +1,3 @@
-import { Sprite } from "pixi.js";
 import { Application } from "pixi.js";
 import { Entity, STATE, MOVEMENT_TYPE, Position, DIRECTION } from "./Entity";
 import { player, debugLog, app } from "./index";
