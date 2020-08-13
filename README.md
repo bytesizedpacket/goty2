@@ -9,10 +9,8 @@ Made with PIXI.JS, Socket.IO, Typescript, and Webpack.
 - Make sure you have [node.js](https://nodejs.org/en/download/) and `npm` installed to compile this project.
 - Clone this repository with `git clone https://github.com/bytesizedpacket/goty2.git`
 - Use `npm install .` in the project directory to ensure all necessary dependencies are present.
-- Use `npm run-script build` to generate output in the `dist` directory. This directory is ready to be served from your webserver.
-- OR
-- Use `npm run-script start` to run a webserver at localhost:8080 that will automatically recompile and refresh when you save any source file.
-
-For multiplayer functionality, use `npm run-script server` on the same IP the client is served from.
+- Use `npm run-script server` on the same IP the client will be hosted from to start the server. The server runs on port `3000`.
+- Use `npm run-script build` to compile the client in the `dist` directory. This directory is ready to be served as-is from your webserver.
+- Alternatively, use `npm run-script start` to run a webserver at `localhost:8080` that will automatically recompile and refresh clients when you save any source file.
 
 This project currently uses icons from [Pixeltier's Modern RPG Icon Pack](https://pixeltier.itch.io/pixeltiers-modern-rpg-icon-set) and [Pixel_Poem Dungeon Tileset](https://pixel-poem.itch.io/dungeon-assetpuck), as well as [Justin's 16x16 Icon Pack](https://zeromatrix.itch.io/rpgiab-icons), which is licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/).
