@@ -198,14 +198,14 @@ let initLevel = function (delta?: any) {
 
   // make player inactive when tab unfocuses
   window.addEventListener('blur', function () {
-    player.state = STATE.AFK;
+    if (player.state == STATE.ACTIVE) player.state = STATE.AFK;
     player.serverSync();
     io.emit('statusMessage', " went AFK");
   });
 
   // reactivate player when they come back
   window.addEventListener('focus', function () {
-    player.state = STATE.ACTIVE;
+    if (player.state == STATE.AFK) player.state = STATE.ACTIVE;
     io.emit('statusMessage', " is no longer AFK");
   });
 
