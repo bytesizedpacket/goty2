@@ -11,20 +11,21 @@ export enum WEAPON_TYPE {
 
 export class Weapon extends Item {
     public damage: number;
+    public weaponType: WEAPON_TYPE;
     constructor(
         spriteName: string,
         app: Application,
         labelText: string,
         damage: number,
+        weaponType: WEAPON_TYPE,
         amount?: number,
     ) {
         super(spriteName, app, labelText, amount);
         this.damage = damage;
+        this.weaponType = weaponType;
     }
 
     public use(from: Entity, target: any) {
-        super.use(from, target);
-
         switch (target.constructor) {
             case RemotePlayer:
                 // limit our distance
@@ -37,5 +38,7 @@ export class Weapon extends Item {
                 // any entity
                 break;
         }
+
+        super.use(from, target);
     }
 }

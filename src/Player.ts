@@ -18,7 +18,7 @@ import { RemotePlayer } from "./RemotePlayer";
 import * as Keyboard from "pixi.js-keyboard";
 // @ts-ignore
 import * as Mouse from "pixi.js-mouse";
-import { Weapon } from "./Weapon";
+import { Weapon, WEAPON_TYPE } from "./Weapon";
 
 // useful variables
 let statusDiv = document.getElementById("level");
@@ -26,7 +26,6 @@ let statusDiv = document.getElementById("level");
 // main player object
 export class Player extends Entity {
   public score: number = 0;
-  private inventoryDisplay: any;
   constructor(
     spriteName: string,
     app: Application,
@@ -37,8 +36,8 @@ export class Player extends Entity {
     this.movementType = MOVEMENT_TYPE.PLAYER;
     console.log("Player has been initialized", this);
 
-    this.addItemToInventory(new Weapon("sword", app, "Sword", 25));
-    this.addItemToInventory(new Weapon("gun", app, "Gun", 10));
+    this.addItemToInventory(new Weapon("sword", app, "Sword", 25, WEAPON_TYPE.MELEE));
+    this.addItemToInventory(new Weapon("gun", app, "Gun", 10, WEAPON_TYPE.PROJECTILE));
   }
 
   // this will run every frame
