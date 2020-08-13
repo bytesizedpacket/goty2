@@ -162,10 +162,17 @@ export class Entity {
     // make sure we actually have a health bar
     if (this.healthBar != undefined) {
       // put 2px it under the entity
-      this.healthBar.position.set(
-        this.spriteObject.x - 1,
-        this.spriteObject.y + this.spriteObject.height + 2
-      );
+      if (this.faceDirection == DIRECTION.EAST) {
+        this.healthBar.position.set(
+          this.spriteObject.x - this.outlineHealthBar.width + 1,
+          this.spriteObject.y + this.spriteObject.height + 2
+        );
+      } else {
+        this.healthBar.position.set(
+          this.spriteObject.x - 1,
+          this.spriteObject.y + this.spriteObject.height + 2
+        );
+      }
 
       // change size of green to represent current health
       this.frontHealthBar.width =
@@ -188,17 +195,16 @@ export class Entity {
     if (this.faceDirection == DIRECTION.EAST) {
       this.spriteObject.scale.set(-1, 1);
       this.spriteObject.position.x += this.spriteObject.width;
-      this.healthBar.position.x = this.spriteObject.x - this.outlineHealthBar.width + 1;
     } else {
       this.spriteObject.scale.set(1, 1);
-      this.healthBar.position.x = this.spriteObject.x;
     }
+
+    this.updateHealthBar();
   }
 
   // runs every frame
   // this DOES NOT GET CALLED if the state is INACTIVE
   public tick() {
-    this.updateHealthBar();
 
     // update our tile position
     this.tilePosition = {
