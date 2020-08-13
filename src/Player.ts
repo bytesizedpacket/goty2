@@ -126,22 +126,6 @@ export class Player extends Entity {
     });
   }
 
-  // override the entity one to always put us in the center
-  public updateSprite() {
-    this.spriteObject.position.set(
-      viewWidth / 2 - this.spriteObject.width / 2,
-      viewHeight / 2 - this.spriteObject.height / 2
-    );
-
-    if (this.faceDirection == DIRECTION.EAST) {
-      this.spriteObject.scale.set(-1, 1);
-      this.spriteObject.position.x += this.spriteObject.width;
-      this.healthBar.position.x = this.spriteObject.x - this.healthBar.width + 1;
-    } else {
-      this.spriteObject.scale.set(1, 1);
-    }
-  }
-
   // tell the server we died
   public damage(amount: number) {
     super.damage(amount);
