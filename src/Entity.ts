@@ -248,7 +248,8 @@ export class Entity {
   // this ignores the current state of the entity
   public damage(amount: number) {
     // TODO: implement defense stat that affects actual damage output
-    this.health -= amount;
+
+    // we don't actually reduce health since the server should handle this, this effectively just shows the damagenumber
 
     new DamageNumber(amount.toString(), this, "red");
   }

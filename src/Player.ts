@@ -132,6 +132,8 @@ export class Player extends Entity {
   public damage(amount: number) {
     super.damage(amount);
 
+    this.health -= amount;
+
     if (this.health <= 0) io.emit('playerDeath', true); // tell the server we died
   }
 
