@@ -1,8 +1,7 @@
 import { Position } from "./Entity";
-import { app, viewWidth, viewHeight, player, statusDiv } from "./index";
+import { app, viewWidth, viewHeight, player, levelDiv } from "./index";
 import { Container } from "pixi.js";
-import { Tile, TILE_TYPE } from "./Tile";
-import { Enemy } from "./Enemy";
+import { Tile } from "./Tile";
 
 // if this levels.json is not formatted correctly, the game WILL crash
 const levelData = require("./levels.json");
@@ -78,7 +77,7 @@ export class Map {
       });
       */
     } else {
-      statusDiv.innerHTML = "<b>Unfortunately, that was the last level.</b>";
+      levelDiv.innerHTML = "<b>Unfortunately, that was the last level.</b>";
     }
   }
 

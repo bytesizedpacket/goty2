@@ -21,7 +21,7 @@ import * as Mouse from "pixi.js-mouse";
 import { Weapon } from "./Weapon";
 
 // useful variables
-let statusDiv = document.getElementById("status");
+let statusDiv = document.getElementById("level");
 
 // main player object
 export class Player extends Entity {
@@ -38,9 +38,7 @@ export class Player extends Entity {
     console.log("Player has been initialized", this);
 
     this.addItemToInventory(new Weapon("sword", app, "Sword", 25));
-    this.addItemToInventory(new Weapon("gun", app, "Gun", 50));
-
-    this.inventoryDisplay = document.getElementById("inventoryDisplay");
+    this.addItemToInventory(new Weapon("gun", app, "Gun", 10));
   }
 
   // this will run every frame
@@ -121,10 +119,13 @@ export class Player extends Entity {
     // since we handle movement here
     this.updateSprite();
 
+    // TODO: make this a UI somehow
+    /*
     this.inventoryDisplay.innerHTML = "";
     this.inventory.forEach(item => {
       this.inventoryDisplay.appendChild(item.htmlDiv);
     });
+    */
   }
 
   // tell the server we died

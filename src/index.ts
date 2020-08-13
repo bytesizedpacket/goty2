@@ -21,7 +21,6 @@ const urlParams = new URLSearchParams(window.location.search);
 export let playerName: string = urlParams.get("name"); // use ?name= to name the player
 console.log("Player name: " + playerName);
 export let statusText: PIXI.Text;
-export let statusDiv = document.getElementById("status");
 export let levelDiv = document.getElementById("level");
 export let ghettoConsole = document.getElementById("ghettoconsole"); // for coding on my ipad where i don't get the regular console (thanks apple)
 
@@ -111,7 +110,7 @@ let initLevel = function (delta?: any) {
       if (!(entity instanceof Player)) entity.destroy();
     });
   }
-  levelDiv.innerHTML = "<br/><b>GOTY2</b>";
+  levelDiv.innerHTML = "<b>GOTY2</b>";
 
   // we add this back later so the map renders under us
   app.stage.removeChild(player.spriteObject);
@@ -268,8 +267,6 @@ app.loader.add(assets).load(function () {
 
   // make stage interactable
   app.stage.interactive = true;
-
-  //statusDiv.innerHTML = ""; // TODO: make this say something
 
   // set up player object
   player = new Player("player", app);
