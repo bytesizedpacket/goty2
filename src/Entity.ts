@@ -188,7 +188,7 @@ export class Entity {
     if (this.faceDirection == DIRECTION.EAST) {
       this.spriteObject.scale.set(-1, 1);
       this.spriteObject.position.x += this.spriteObject.width;
-      this.healthBar.position.x = this.spriteObject.x - (this.healthBar.width / 2) + 1;
+      this.healthBar.position.x = this.spriteObject.x - this.outlineHealthBar.width + 1;
     } else {
       this.spriteObject.scale.set(1, 1);
       this.healthBar.position.x = this.spriteObject.x;
