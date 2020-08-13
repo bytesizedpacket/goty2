@@ -4,6 +4,7 @@ import { Entity, STATE } from "./Entity";
 import { RemotePlayer } from "./RemotePlayer";
 import { io } from "./index";
 
+// the use() function will read this to determine what to do
 export enum WEAPON_TYPE {
     MELEE = "melee",
     PROJECTILE = "projectile",
@@ -25,7 +26,8 @@ export class Weapon extends Item {
         this.weaponType = weaponType;
     }
 
-    public use(from: Entity, target: any) {
+    public use(from: Entity, target: any, e: any) {
+        let clickPos: Position = e.data.global; // the screen coordinates of where the user clicked (top left pixel is 0,0)
         switch (target.constructor) {
             case RemotePlayer:
                 // limit our distance
@@ -36,9 +38,10 @@ export class Weapon extends Item {
                 break;
             default:
                 // any entity
+                //console.log(clickPos);
                 break;
         }
 
-        super.use(from, target);
+        super.use(from, target, e);
     }
 }

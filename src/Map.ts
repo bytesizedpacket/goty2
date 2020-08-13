@@ -52,6 +52,13 @@ export class Map {
           );
           this.tiles[stepX][stepY] = currentTile;
 
+          // make it clickable (calls this.onClick)
+          // this is jank
+          // also, this is jank
+          currentTile.spriteObject.on("mousedown", function (e: any) {
+            currentTile.onClick(e);
+          });
+
           this.tileContainer.addChild(currentTile.spriteObject);
         }
       }

@@ -80,6 +80,7 @@ export class Player extends Entity {
         }
 
         // change weapon!
+        // TODO: more robust inventory management
         if (Keyboard.isKeyDown("KeyE")) {
           this.setEquippedItem(1);
         }
@@ -107,6 +108,7 @@ export class Player extends Entity {
               tthis.damage(1);
               break;
             case HealthPack:
+              // TODO: move this to item.pickUp() so we don't have to do this with a switch/individual item classes
               tthis.heal(100);
               entity.destroy();
               break;
@@ -144,18 +146,21 @@ export class Player extends Entity {
   }
 
   // when entities are clicked, they trigger this function on the player
-  public interact(target: any) {
+  public interact(target: any, e: any) {
     // TODO: different weapons
     if (this.state == STATE.ACTIVE) {
       // make sure we aren't clicking ourselves
       if (!(target instanceof Player)) {
-        this.inventory[this.equippedItem].use(this, target);
+        this.inventory[this.equippedItem].use(this, target, e);
       }
     }
   }
 
   // send player's info to the server
   public serverSync() {
+
+    // we can't send the inventory directly since that would try to upload the sprite/graphics
+    // so we need to reconstruct a new array with only the info we need
     let inventory: any = [];
     this.inventory.forEach(item => {
       inventory.push({

@@ -263,9 +263,9 @@ export class Entity {
   }
 
   // it has been clicked!
-  public onClick(e?: any) {
+  public onClick(e: any) {
     // call the player's interact() on this
-    player.interact(this);
+    player.interact(this, e);
   }
 
   // add an item to this entity's inventory

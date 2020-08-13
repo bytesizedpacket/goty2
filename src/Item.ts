@@ -37,7 +37,7 @@ export class Item {
   }
 
   // use this item on the given target
-  public use(from: Entity, target: any) {
-    console.log(from.labelText + " used " + this.labelText + " on " + target.labelText);
+  public use(from: Entity, target: any, e: any) {
+    //console.log(from.labelText + " used " + this.labelText + " on " + target.labelText);
   }
 }
