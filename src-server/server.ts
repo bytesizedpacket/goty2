@@ -3,27 +3,7 @@ let http = require('http').createServer(app);
 // @ts-ignore
 let io = require("socket.io")(http);
 
-interface PlayerData {
-  position: { x: number, y: number },
-  health: number,
-  state: STATE,
-  name: string,
-  inventory: any,
-  equippedItem: any,
-  faceDirection: DIRECTION,
-}
-
-enum DIRECTION {
-  WEST = "west",
-  EAST = "east",
-}
-
-enum STATE {
-  ACTIVE,
-  INACTIVE, // won't move or do anything
-  DEAD, // will remove itself from the game/memory
-  AFK, // other player is afk!
-}
+import { PlayerData } from "../src/index";
 
 // currently connected players
 // map of ID -> Player object
