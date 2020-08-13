@@ -9,7 +9,7 @@ import {
   viewWidth,
   currentMap,
 } from "./index";
-import { checkSpriteCollision, io } from "./index";
+import { checkSpriteCollision, io, playerName } from "./index";
 import { Entity, STATE } from "./Entity";
 import { Enemy } from "./Enemy";
 import { Item } from "./Item"
@@ -175,6 +175,28 @@ export class Player extends Entity {
           break;
       }
     }
+  }
+
+  // send player's info to the server
+  public serverSync() {
+    let inventory: any = [];
+    this.inventory.forEach(item => {
+      inventory.push({
+        name: item.labelText,
+        amount: item.amount,
+        spriteName: item.spriteObject.name,
+      });
+    });
+
+    io.emit('playerUpdate', {
+      position: this.position,
+      health: this.health,
+      state: this.state,
+      name: playerName,
+      inventory: inventory,
+      equippedItem: this.equippedItem,
+      faceDirection: this.faceDirection,
+    });
   }
 
   protected checkMapCollision(): boolean {

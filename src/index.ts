@@ -7,7 +7,7 @@ import * as Keyboard from "pixi.js-keyboard";
 // @ts-ignore
 import * as Mouse from "pixi.js-mouse";
 import { Entity } from "./Entity";
-import { STATE, MOVEMENT_TYPE } from "./Entity";
+import { STATE, MOVEMENT_TYPE, DIRECTION } from "./Entity";
 import { Player } from "./Player";
 import { RemotePlayer } from "./RemotePlayer";
 import { Enemy } from "./Enemy";
@@ -45,6 +45,17 @@ export let currentMap: Map;
 export let connected: boolean = false;
 export let updateTimer: number = 0;
 let updateInterval = 1; // amount of frames to hold data for
+
+// this is what we communicate with the server to update players
+export interface PlayerData {
+  position: { x: number, y: number },
+  health: number,
+  state: STATE,
+  name: string,
+  inventory: any,
+  equippedItem: any,
+  faceDirection: DIRECTION,
+}
 
 // these are our assets
 let assets = [
@@ -187,24 +198,7 @@ let initLevel = function (delta?: any) {
   // make player inactive when tab unfocuses
   window.addEventListener('blur', function () {
     player.state = STATE.AFK;
-    let inventory: any = [];
-    player.inventory.forEach(item => {
-      inventory.push({
-        name: item.labelText,
-        amount: item.amount,
-        spriteName: item.spriteObject.name,
-      });
-    });
-
-    io.emit('playerUpdate', {
-      position: player.position,
-      health: player.health,
-      state: player.state,
-      name: playerName,
-      inventory: inventory,
-      equippedItem: player.equippedItem,
-      faceDirection: player.faceDirection,
-    });
+    player.serverSync();
     io.emit('statusMessage', " went AFK");
   });
 
@@ -238,25 +232,8 @@ let gameLoop = function (delta: any) {
   //if(connected){
   if (updateTimer <= 0) {
 
-    // TODO: move all of this to PlayerData interface and create using player class
-    let inventory: any = [];
-    player.inventory.forEach(item => {
-      inventory.push({
-        name: item.labelText,
-        amount: item.amount,
-        spriteName: item.spriteObject.name,
-      });
-    });
-
-    io.emit('playerUpdate', {
-      position: player.position,
-      health: player.health,
-      state: player.state,
-      name: playerName,
-      inventory: inventory,
-      equippedItem: player.equippedItem,
-      faceDirection: player.faceDirection,
-    });
+    // TODO: move all of this to PlayerData interface and emit to server using player.serverSync()
+    player.serverSync();
     updateTimer = updateInterval;
   } else {
     updateTimer--;

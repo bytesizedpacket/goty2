@@ -1,24 +1,7 @@
 import { Application } from "pixi.js";
 import { Entity, STATE, MOVEMENT_TYPE, Position, DIRECTION } from "./Entity";
-import { player, debugLog, app } from "./index";
+import { debugLog, app, PlayerData } from "./index";
 import { Item } from "./Item";
-import {
-  entities,
-  checkSpriteCollision,
-  currentDelta,
-  viewHeight,
-  viewWidth
-} from "./index";
-
-export interface PlayerData {
-  position: { x: number, y: number },
-  health: number,
-  state: STATE,
-  name: string,
-  inventory: any,
-  equippedItem: any,
-  faceDirection: DIRECTION,
-}
 
 // main remote player object
 export class RemotePlayer extends Entity {
@@ -32,8 +15,7 @@ export class RemotePlayer extends Entity {
     speed?: number,
     displayHealthBar?: boolean,
     movementType?: MOVEMENT_TYPE,
-    position?: Position,
-    labelText?: string
+    position?: Position
   ) {
     if (playerData.name) {
       super(spriteName, app, speed, displayHealthBar, movementType, position, playerData.name);
