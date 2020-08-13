@@ -200,8 +200,8 @@ export class Player extends Entity {
                 centerX: this.position.x + sprite1.width / 2,
                 centerY: this.position.y + sprite1.height / 2,
                 //Find the half-widths and half-heights of each sprite
-                halfWidth: sprite1.width / 2,
-                halfHeight: sprite1.height / 2,
+                halfWidth: sprite1.width / 2 - 1, // subtract 1 so we can squeeze through 1 tile gaps
+                halfHeight: sprite1.height / 2 - 1,
               };
 
               let r2 = {
@@ -209,8 +209,8 @@ export class Player extends Entity {
                 centerX: currentTile.position.x + sprite2.width / 2,
                 centerY: currentTile.position.y + sprite2.height / 2,
                 //Find the half-widths and half-heights of each sprite
-                halfWidth: sprite2.width / 2,
-                halfHeight: sprite2.height / 2,
+                halfWidth: sprite2.width / 2 - 1, // subtract 1 so we can squeeze through 1 tile gaps
+                halfHeight: sprite2.height / 2 - 1,
               };
 
               //hit will determine whether there's a collision
