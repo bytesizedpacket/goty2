@@ -35,6 +35,7 @@ export let debugLog = function (text: string) {
 export let viewWidth: number = 256;
 export let viewHeight: number = 256;
 let zoomScale: number = parseInt(urlParams.get("zoom")); // URL query parameter ?zoom=_
+export let enableUnfocusAfk: boolean = JSON.parse(urlParams.get("unfocusAFK"));
 export let currentLevel: number;
 if (isNaN(zoomScale)) zoomScale = 2; // default to 2 if not specified
 // TODO: if zoom level isn't specified, automatically determine largest possible zoom level (also put this in window.onresize)
@@ -198,15 +199,20 @@ let initLevel = function (delta?: any) {
 
   // make player inactive when tab unfocuses
   window.addEventListener('blur', function () {
-    if (player.state == STATE.ACTIVE) player.state = STATE.AFK;
-    player.serverSync();
-    io.emit('statusMessage', " went AFK");
+    if (player.state == STATE.ACTIVE && enableUnfocusAfk) {
+      player.state = STATE.AFK;
+      player.serverSync();
+      io.emit('statusMessage', " went AFK");
+    }
   });
 
   // reactivate player when they come back
   window.addEventListener('focus', function () {
-    if (player.state == STATE.AFK) player.state = STATE.ACTIVE;
-    io.emit('statusMessage', " is no longer AFK");
+    if (player.state == STATE.AFK) {
+      player.state = STATE.ACTIVE;
+      player.serverSync();
+      io.emit('statusMessage', " is no longer AFK");
+    }
   });
 
   // status text (starts blank)
