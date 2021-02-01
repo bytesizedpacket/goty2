@@ -4,3 +4,4 @@ blocks
 bundle.js
 .envrc
 server
+.DS_Store
