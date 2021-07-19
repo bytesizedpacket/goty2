@@ -1,6 +1,6 @@
 import { Item } from "./Item";
 import { Application } from "pixi.js";
-import { Entity, STATE } from "./Entity";
+import { Entity, Position, STATE } from "./Entity";
 import { RemotePlayer } from "./RemotePlayer";
 import { io } from "./index";
 

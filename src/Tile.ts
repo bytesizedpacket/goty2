@@ -1,6 +1,7 @@
 import { app, player } from "./index";
 import { Sprite } from "pixi.js";
 import { Position } from "./Entity";
+
 export enum TILE_TYPE {
   FLOOR = "tile-floor",
   WALL = "tile-wall"

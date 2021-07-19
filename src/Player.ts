@@ -135,7 +135,10 @@ export class Player extends Entity {
 
     this.health -= amount;
 
-    if (this.health <= 0) io.emit('playerDeath', true); // tell the server we died
+    if (this.health <= 0) {
+      io.emit('playerDeath', true); // tell the server we died
+      this.position.x = 999999999; // we're dead so bye
+    }
   }
 
   // sets the player's current score
