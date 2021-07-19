@@ -46,7 +46,7 @@ export class Player extends Entity {
     let tthis = this; // we do this because the forEach fucks with the `this` keyword
 
     if (this.health <= 0) {
-      statusDiv.innerHTML = "Uh-oh spaghetti-o's! You're <b>dead.</b>";
+      statusDiv.innerHTML = "Uh-oh spaghetti-o's! You're <b>dead.</b> - Refresh to respawn";
     } else {
       // we're still alive!
 
