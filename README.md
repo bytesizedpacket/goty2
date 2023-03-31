@@ -2,6 +2,13 @@
 
 A project based on the [Gjorg's Arena](https://github.com/bytesizedpacket/arena) codebase, intended to be an experimental playground with no particular design direction.
 
+The project currently features a multiplayer lobby where an arbitrary number of clients can connect. Other players can see each other's position, health, username, and currently equipped weapon.
+
+- Move character with `WASD`
+- Select weapon with `Q` and `E`
+- Attack other players by left-clicking them within your weapon's range
+- Set your username with the `?name=[x]` URL variable.
+
 The name "GOTY2" is a reference to an old multiplayer chatroom named "GOTY" that was developed by BSP as a tech demo.
 
 Made with PIXI.JS, Socket.IO, Typescript, and Webpack.
