@@ -2,7 +2,7 @@ import { Map } from "./Map";
 import * as PIXI from "pixi.js";
 export let url = window.location.toString().split("//")[1];
 export let serverUrl = url.split(":")[0].split("/")[0].split("?")[0] + ":3000";
-export let io = require("socket.io-client")(serverUrl);
+export let io = require("socket.io-client")(serverUrl.replace("https", "http"));
 // make vscode ignore these since they don't have typings
 // @ts-ignore
 import * as Keyboard from "pixi.js-keyboard";
@@ -29,7 +29,7 @@ export let ghettoConsole = document.getElementById("ghettoconsole"); // for codi
 export let debugLog = function (text: string) {
   console.log(text);
   //ghettoConsole.innerHTML += "<br/>" + text;
-}
+};
 
 // game properties
 export let viewWidth: number = 256;
@@ -50,13 +50,13 @@ let updateInterval = 1; // amount of frames to hold data for
 
 // this is what we communicate with the server to update players
 export interface PlayerData {
-  position: { x: number, y: number },
-  health: number,
-  state: STATE,
-  name: string,
-  inventory: any,
-  equippedItem: any,
-  faceDirection: DIRECTION,
+  position: { x: number; y: number };
+  health: number;
+  state: STATE;
+  name: string;
+  inventory: any;
+  equippedItem: any;
+  faceDirection: DIRECTION;
 }
 
 // these are our assets
@@ -79,12 +79,12 @@ export let app = new PIXI.Application({ width: viewWidth, height: viewHeight });
 document.body.appendChild(app.view);
 
 // connect socketio
-io.on('connect', function (socket: any) {
+io.on("connect", function (socket: any) {
   connected = true;
   debugLog("Connected to server!");
 });
 
-io.on('disconnect', () => {
+io.on("disconnect", () => {
   connected = false;
   debugLog("Disconnected");
 });
@@ -150,7 +150,7 @@ let initLevel = function (delta?: any) {
 
   // the server has sent us new info about a player
   // shit contains 'id' and 'remotePlayer' object
-  io.on('playerUpdate', function (shit: any) {
+  io.on("playerUpdate", function (shit: any) {
     let id = shit.id;
     let data = shit.data;
     let playerExists = false;
@@ -174,17 +174,17 @@ let initLevel = function (delta?: any) {
   });
 
   // receive status message!
-  io.on('statusMessage', (message: string) => {
+  io.on("statusMessage", (message: string) => {
     statusText.text = message;
   });
 
   // we have been damaged!
-  io.on('playerDamage', (amount: number) => {
+  io.on("playerDamage", (amount: number) => {
     player.damage(amount);
   });
 
   // the server told us a player disconnected
-  io.on('playerDisconnect', (id: string) => {
+  io.on("playerDisconnect", (id: string) => {
     entities.forEach(function (entity: Entity) {
       // is this a player?
       if (entity instanceof RemotePlayer) {
@@ -198,25 +198,29 @@ let initLevel = function (delta?: any) {
   });
 
   // make player inactive when tab unfocuses
-  window.addEventListener('blur', function () {
+  window.addEventListener("blur", function () {
     if (player.state == STATE.ACTIVE && enableUnfocusAfk) {
       player.state = STATE.AFK;
       player.serverSync();
-      io.emit('statusMessage', " went AFK");
+      io.emit("statusMessage", " went AFK");
     }
   });
 
   // reactivate player when they come back
-  window.addEventListener('focus', function () {
+  window.addEventListener("focus", function () {
     if (player.state == STATE.AFK) {
       player.state = STATE.ACTIVE;
       player.serverSync();
-      io.emit('statusMessage', " is no longer AFK");
+      io.emit("statusMessage", " is no longer AFK");
     }
   });
 
   // status text (starts blank)
-  statusText = new PIXI.Text("", { font: "8px Roboto", fill: "white", dropShadow: true })
+  statusText = new PIXI.Text("", {
+    font: "8px Roboto",
+    fill: "white",
+    dropShadow: true,
+  });
   statusText.scale.set(0.3, 0.3);
   statusText.x += 5;
   statusText.y += 5;
@@ -238,7 +242,6 @@ let gameLoop = function (delta: any) {
   // update player position
   //if(connected){
   if (updateTimer <= 0) {
-
     // TODO: move all of this to PlayerData interface and emit to server using player.serverSync()
     player.serverSync();
     updateTimer = updateInterval;
