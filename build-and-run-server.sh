@@ -5,6 +5,6 @@
 
 npm run-script build
 rm -rf /srv/*
-mv dist /srv
+mv dist/* /srv/
 
 ./host-server.sh
