@@ -20,6 +20,6 @@ Made with PIXI.JS, Socket.IO, Typescript, and Webpack.
 - Use `npm run-script build` to compile the client in the `dist` directory. This directory is ready to be served as-is from your webserver.
 - Alternatively, use `npm run-script start` to run a webserver at `localhost:8080` that will automatically recompile and refresh clients when you save any source file.
 
-Play it now at [floof.zone:8080](http://floof.zone:8080)
+Play it now at [goty2.floof.zone](http://goty2.floof.zone)
 
 This project currently uses icons from [Pixeltier's Modern RPG Icon Pack](https://pixeltier.itch.io/pixeltiers-modern-rpg-icon-set) and [Pixel_Poem Dungeon Tileset](https://pixel-poem.itch.io/dungeon-assetpuck), as well as [Justin's 16x16 Icon Pack](https://zeromatrix.itch.io/rpgiab-icons), which is licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/).

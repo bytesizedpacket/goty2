@@ -2,7 +2,7 @@ import { Map } from "./Map";
 import * as PIXI from "pixi.js";
 export let url = window.location.toString().split("//")[1];
 export let serverUrl = url.split(":")[0].split("/")[0].split("?")[0] + ":3000";
-export let io = require("socket.io-client")(serverUrl.replace("https", "http"));
+export let io = require("socket.io-client")(serverUrl);
 // make vscode ignore these since they don't have typings
 // @ts-ignore
 import * as Keyboard from "pixi.js-keyboard";
