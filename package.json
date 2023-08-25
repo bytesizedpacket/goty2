@@ -20,7 +20,7 @@
     "pixi.js-mouse": "^1.1.6",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.10",
-    "webpack": "^4.46.0",
+    "webpack": "^5.64.4",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.2"
   },
